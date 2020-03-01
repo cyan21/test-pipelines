@@ -54,9 +54,9 @@ pipelines:
       - name: distribute_test
         type: DistributeReleaseBundle
         configuration:
-          dryRun: true 
+          dryRun: false 
           inputResources:
             - name: conanRB 
-              trigger: false   
+              trigger: true   
             - name: myApp_distributionRule_test
-              trigger: false    # default true
+#              trigger: false    # default true
