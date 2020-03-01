@@ -48,8 +48,8 @@ pipelines:
               * Feature 1 
               * Bigfix 1
           inputResources:
-#            - name: myApp_BuildInfo_Prod_ok 
-            - name: aql_debpkg_test 
+            - name: myApp_BuildInfo_Prod_ok 
+#            - name: aql_debpkg_test 
           outputResources:
             - name: conanRB 
       - name: distribute_test
@@ -61,3 +61,15 @@ pipelines:
               trigger: true   
             - name: myApp_distributionRule_test
 #              trigger: false    # default true
+      - name: init_release_bundle_test2
+        type: CreateReleaseBundle 
+        configuration:
+          releaseBundleName: myAppDebian
+          releaseBundleVersion: 0.0.3 
+          dryRun: false
+          sign: false 
+          description: automatic creation 
+          inputResources:
+            - name: aql_debpkg_test 
+          outputResources:
+            - name: debRB 

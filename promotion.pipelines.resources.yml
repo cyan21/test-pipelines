@@ -37,3 +37,9 @@ resources:
     configuration:
       sourceArtifactory: artifactory_eu 
       query: 'items.find({@deb.name": "myApp","@deb.version": "1.0.0"})' 
+  - name: debRB 
+    type: ReleaseBundle
+    configuration:
+      sourceDistribution: distribution
+      name: myAppDebian
+      version: 0.0.1 
