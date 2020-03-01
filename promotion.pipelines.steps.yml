@@ -64,11 +64,12 @@ pipelines:
         type: CreateReleaseBundle 
         configuration:
           releaseBundleName: myAppDebian
-          releaseBundleVersion: 0.0.3 
+          releaseBundleVersion: 0.0.4 
           dryRun: false
           sign: false 
           description: automatic creation 
           inputResources:
             - name: aql_debpkg_test 
+            - name: aql_debpkg_test2 
           outputResources:
             - name: debRB 

@@ -38,19 +38,23 @@ resources:
       sourceArtifactory: artifactory_eu 
       query: > 
         items.find({
-        "$or": [{
         "$and": [
         {"@deb.name": "myApp"},
         {"@deb.version": "1.0.0"}
         ]
-        },
-        {
+        })
+
+  - name: aql_debpkg_test2
+    type: Aql
+    configuration:
+      sourceArtifactory: artifactory_eu 
+      query: > 
+        items.find({
         "$and": [
         {"@build.name": "cppApp"},
         {"@build.number": "2"},
         {"repo":"winter-conan-prod-local"}
         ]
-        }]
         })
 
   - name: debRB 
