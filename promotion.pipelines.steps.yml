@@ -37,6 +37,7 @@ pipelines:
         configuration:
           releaseBundleName: myApp 
           releaseBundleVersion: 0.0.1 
+          dryRun: false
           inputResources:
             - name: myApp_BuildInfo_Prod_ok 
           outputResources:
