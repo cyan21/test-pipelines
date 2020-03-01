@@ -27,7 +27,7 @@ resources:
     type: DistributionRule
     configuration:
       sourceDistribution: distribution
-      serviceName: edeg_apac         
+      serviceName: "*apac*"         
       siteName: "*"
       cityName: "*"
       countryCodes:
