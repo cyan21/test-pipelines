@@ -29,6 +29,6 @@ resources:
       sourceDistribution: distribution
       serviceName: "edeg_apac"         
       siteName: "*"
-      cityName: "Shanghai"
+      cityName: "*"
       countryCodes:
         - "*"
