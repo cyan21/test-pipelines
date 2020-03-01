@@ -36,8 +36,17 @@ pipelines:
         type: CreateReleaseBundle 
         configuration:
           releaseBundleName: myApp 
-          releaseBundleVersion: 0.0.1 
+          releaseBundleVersion: 0.0.2 
           dryRun: false
+          sign: true 
+          description: automatic creation 
+          releaseNotes:
+            content: markdown
+            syntax: |
+              # Description 
+              super release 
+              * Feature 1 
+              * Bigfix 1
           inputResources:
             - name: myApp_BuildInfo_Prod_ok 
           outputResources:
