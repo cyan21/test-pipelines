@@ -48,7 +48,7 @@ pipelines:
               * Feature 1 
               * Bigfix 1
           inputResources:
-            - name: myApp_BuildInfo_Prod_ok 
+#            - name: myApp_BuildInfo_Prod_ok 
             - name: aql_debpkg_test 
           outputResources:
             - name: conanRB 
