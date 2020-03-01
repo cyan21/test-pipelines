@@ -17,3 +17,9 @@ resources:
       sourceArtifactory: artifactory_eu
       buildName: my-react-app 
       buildNumber: 48 
+  - name: conanRB 
+    type: ReleaseBundle
+    configuration:
+      sourceDistribution: distribution
+      name: myApp  
+      version: 0.0.1 

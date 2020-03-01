@@ -32,3 +32,12 @@ pipelines:
         execution:
           onSuccess:
             - echo "Passed UAT test" 
+      - name: init_release_bundle 
+        type: CreateReleaseBundle 
+        configuration:
+          releaseBundleName: myApp 
+          releaseBundleVersion: 0.0.1 
+          inputResources:
+            - name: App_BuildInfo_Prod_ok 
+          outputResources:
+            - name: conanRB 
