@@ -1,37 +1,37 @@
 resources:
-  - name: myApp_BuildInfo
-    type: BuildInfo 
-    configuration:
-      sourceArtifactory: artifactory_eu
-      buildName: my-react-app 
-      buildNumber: 48 
-  - name: myApp_BuildInfo_SIT_ok
-    type: BuildInfo 
-    configuration:
-      sourceArtifactory: artifactory_eu
-      buildName: my-react-app 
-      buildNumber: 48 
-  - name: myApp_BuildInfo_Prod_ok
-    type: BuildInfo 
-    configuration:
-      sourceArtifactory: artifactory_eu
-      buildName: my-react-app 
-      buildNumber: 48 
-  - name: conanRB 
-    type: ReleaseBundle
-    configuration:
-      sourceDistribution: distribution
-      name: myApp  
-      version: 0.0.1 
-  - name: myApp_distributionRule_test 
-    type: DistributionRule
-    configuration:
-      sourceDistribution: distribution
-      serviceName: "*"         
-      siteName: "*"
-      cityName: "Shanghai"
-      countryCodes:
-        - "*"
+#  - name: myApp_BuildInfo
+#    type: BuildInfo 
+#    configuration:
+#      sourceArtifactory: artifactory_eu
+#      buildName: my-react-app 
+#      buildNumber: 48 
+#  - name: myApp_BuildInfo_SIT_ok
+#    type: BuildInfo 
+#    configuration:
+#      sourceArtifactory: artifactory_eu
+#      buildName: my-react-app 
+#      buildNumber: 48 
+#  - name: myApp_BuildInfo_Prod_ok
+#    type: BuildInfo 
+#    configuration:
+#      sourceArtifactory: artifactory_eu
+#      buildName: my-react-app 
+#      buildNumber: 48 
+#  - name: conanRB 
+#    type: ReleaseBundle
+#    configuration:
+#      sourceDistribution: distribution
+#      name: myApp  
+#      version: 0.0.1 
+#  - name: myApp_distributionRule_test 
+#    type: DistributionRule
+#    configuration:
+#      sourceDistribution: distribution
+#      serviceName: "*"         
+#      siteName: "*"
+#      cityName: "Shanghai"
+#      countryCodes:
+#        - "*"
   - name: aql_debpkg_test
     type: Aql
     configuration:
