@@ -1,17 +1,17 @@
 resources:
-  - name: App_BuildInfo 
+  - name: myApp_BuildInfo
     type: BuildInfo 
     configuration:
       sourceArtifactory: artifactory_eu
       buildName: my-react-app 
       buildNumber: 48 
-  - name: App_BuildInfo_SIT_ok
+  - name: myApp_BuildInfo_SIT_ok
     type: BuildInfo 
     configuration:
       sourceArtifactory: artifactory_eu
       buildName: my-react-app 
       buildNumber: 48 
-  - name: App_BuildInfo_Prod_ok
+  - name: myApp_BuildInfo_Prod_ok
     type: BuildInfo 
     configuration:
       sourceArtifactory: artifactory_eu

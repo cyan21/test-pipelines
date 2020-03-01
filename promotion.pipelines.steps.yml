@@ -11,9 +11,9 @@ pipelines:
           comment: "Passed SIT test"
           copy: false
           inputResources:
-            - name: App_BuildInfo 
+            - name: myApp_BuildInfo 
           outputResources:
-            - name: App_BuildInfo_SIT_ok 
+            - name: myApp_BuildInfo_SIT_ok 
         execution:
           onSuccess:
             - echo "Passed SIT test" 
@@ -26,9 +26,9 @@ pipelines:
           comment: "Passed UAT test"
           copy: false
           inputResources:
-            - name: App_BuildInfo_SIT_ok 
+            - name: myApp_BuildInfo_SIT_ok 
           outputResources:
-            - name: App_BuildInfo_Prod_ok 
+            - name: myApp_BuildInfo_Prod_ok 
         execution:
           onSuccess:
             - echo "Passed UAT test" 
@@ -38,6 +38,6 @@ pipelines:
           releaseBundleName: myApp 
           releaseBundleVersion: 0.0.1 
           inputResources:
-            - name: App_BuildInfo_Prod_ok 
+            - name: myApp_BuildInfo_Prod_ok 
           outputResources:
             - name: conanRB 
