@@ -41,8 +41,8 @@ pipelines:
           sign: true 
           description: automatic creation 
           releaseNotes:
-            content: markdown
-            syntax: |
+            syntax: markdown
+            content: |
               # Description 
               super release 
               * Feature 1 
