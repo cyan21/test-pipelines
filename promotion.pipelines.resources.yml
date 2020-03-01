@@ -28,7 +28,7 @@ resources:
     configuration:
       sourceDistribution: distribution
       serviceName: edeg_apac         
-      siteName: *
-      cityName: *
+      siteName: "*"
+      cityName: "*"
       countryCodes:
-        - *
+        - "*"
