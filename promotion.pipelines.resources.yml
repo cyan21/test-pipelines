@@ -23,3 +23,12 @@ resources:
       sourceDistribution: distribution
       name: myApp  
       version: 0.0.1 
+  - name: myApp_distributionRule_test 
+    type: DistributionRule
+    configuration:
+      sourceDistribution: distribution
+      serviceName: edeg_apac         
+      siteName: *
+      cityName: *
+      countryCodes:
+        - *

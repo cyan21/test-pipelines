@@ -32,7 +32,7 @@ pipelines:
         execution:
           onSuccess:
             - echo "Passed UAT test" 
-      - name: init_release_bundle 
+      - name: init_release_bundle_test
         type: CreateReleaseBundle 
         configuration:
           releaseBundleName: myApp 
@@ -51,3 +51,12 @@ pipelines:
             - name: myApp_BuildInfo_Prod_ok 
           outputResources:
             - name: conanRB 
+      - name: distribute_test
+        type: DistributeReleaseBundle
+        configuration:
+          dryRun: true 
+          inputResources:
+            - name: conanRB 
+              trigger: false   
+            - name: myApp_distributionRule_test
+              trigger: false    # default true
