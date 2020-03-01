@@ -1,6 +1,6 @@
 apiVersion: v1.1
 pipelines:
-  - name: Conan_promote
+  - name: promote_pipeline
     steps:
       - name: promotion_to_UAT 
         type: PromoteBuild 
@@ -13,7 +13,7 @@ pipelines:
           inputResources:
             - name: App_BuildInfo 
           outputResources:
-            - name: App_BuildInfo 
+            - name: App_BuildInfo_SIT_ok 
         execution:
           onSuccess:
             - echo "Passed SIT test" 
@@ -26,9 +26,9 @@ pipelines:
           comment: "Passed UAT test"
           copy: false
           inputResources:
-            - name: App_BuildInfo 
+            - name: App_BuildInfo_SIT_ok 
           outputResources:
-            - name: App_BuildInfo 
+            - name: App_BuildInfo_Prod_ok 
         execution:
           onSuccess:
             - echo "Passed UAT test" 

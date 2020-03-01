@@ -5,3 +5,15 @@ resources:
       sourceArtifactory: artifactory_eu
       buildName: my-react-app 
       buildNumber: 48 
+  - name: App_BuildInfo_SIT_ok
+    type: BuildInfo 
+    configuration:
+      sourceArtifactory: artifactory_eu
+      buildName: my-react-app 
+      buildNumber: 48 
+  - name: App_BuildInfo_Prod_ok
+    type: BuildInfo 
+    configuration:
+      sourceArtifactory: artifactory_eu
+      buildName: my-react-app 
+      buildNumber: 48 
