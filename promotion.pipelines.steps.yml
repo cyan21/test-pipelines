@@ -15,8 +15,6 @@ pipelines:
           outputResources:
             - name: App_BuildInfo 
         execution:
-          onExecute:
-            - echo "SIT Testing ..." 
           onSuccess:
             - echo "Passed SIT test" 
       - name: promotion_to_prod 
@@ -32,7 +30,5 @@ pipelines:
           outputResources:
             - name: App_BuildInfo 
         execution:
-          onExecute:
-            - echo "UAT Testing ..." 
           onSuccess:
             - echo "Passed UAT test" 
