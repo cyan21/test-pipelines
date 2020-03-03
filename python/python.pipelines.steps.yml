@@ -7,34 +7,49 @@ pipelines:
           art_repo: asgardian-pypi
           art_repo_promotion: asgardian-pypi-prod-local
     steps:
-      - name: python_docker_build
-        type: DockerBuild
-        configuration:
-          dockerFileLocation: . 
-          dockerFileName: CI/DockerBuild/Dockerfile
-          dockerImageName: docker-dev-local.artifactory-eu.soleng-emea-staging.jfrog.team/python-build
-          dockerImageTag: ${run_number}
-          dockerOptions: --build-arg BUILD_NAME=python-greeting --build-arg BUILD_NUMBER=${run_number}  --build-arg ARTY_URL=${art_url} --build-arg ARTY_USER=${int_artSecret_user}  --build-arg ARTY_APIKEY=${int_artSecret_apikey} --build-arg ARTY_MAIN_REPO=${art_repo} 
-          inputResources:
-            - name: python_pipeline_src
-          integrations:
-            - name: registry_eu
-            - name: artSecret
+#      - name: python_docker_build
+#        type: DockerBuild
+#        configuration:
+#          dockerFileLocation: . 
+#          dockerFileName: CI/DockerBuild/Dockerfile
+#          dockerImageName: docker-dev-local.artifactory-eu.soleng-emea-staging.jfrog.team/python-build
+#          dockerImageTag: ${run_number}
+#          dockerOptions: --build-arg BUILD_NAME=python-greeting --build-arg BUILD_NUMBER=${run_number}  --build-arg ARTY_URL=${art_url} --build-arg ARTY_USER=${int_artSecret_user}  --build-arg ARTY_APIKEY=${int_artSecret_apikey} --build-arg ARTY_MAIN_REPO=${art_repo} 
+#          inputResources:
+#            - name: python_pipeline_src
+#          integrations:
+#            - name: registry_eu
+#            - name: artSecret
 
       - name: python_test 
         type: Bash
         configuration:
           inputSteps:
-          - name: python_docker_build 
+            - name: python_pipeline_src
           integrations:
             - name: artSecret
           outputResources:
             - name: python_BuildInfo 
+          runtime:           
+            type: image 
+            image:
+              custom:
+                name: continuumio/miniconda3
+                tag: 4.7.12
+                registry: registry_eu
+                sourceRepository: docker.artifactory-eu.soleng-emea-staging.jfrog.team # required if registry is Artifactory. e.g. docker-local
         execution:
           onExecute:
             - echo "Testing ..." 
-#            - curl -fL https://getcli.jfrog.io | sh &&  chmod 755 jfrog  
-#            - ./jfrog rt c --interactive=false --url=${art_url} --user=${int_artSecret_user} --apikey=${int_artSecret_apikey} art7 && ./jfrog rt use art7 && ./jfrog rt ping
+            - curl -fL https://getcli.jfrog.io | sh &&  chmod 755 jfrog  
+            - ./jfrog rt c --interactive=false --url=${art_url} --user=${int_artSecret_user} --apikey=${int_artSecret_apikey} art7 && ./jfrog rt use art7 && ./jfrog rt ping
+            - ./jfrog rt use art7 
+            - chmod 777 -R /opt/conda/lib/python3.7/site-packages/ /opt/jfrog
+            - ls -la 
+            - chmod -R u+x python-greetings/scripts
+            - python-greetings/scripts/init.sh -r ${art_repo} -s art7 
+            - python-greetings/scripts/build.sh -i ${pipeline_name} -n ${run_number} -t release -r ${art_repo} -a art7 -m demo -s ${art_url} 
+            - echo "END" 
 
       - name: python_scan
         type: XrayScan
