@@ -24,7 +24,7 @@ pipelines:
       - name: python_test 
         type: Bash
         configuration:
-          inputSteps:
+          inputResources:
             - name: python_pipeline_src
           integrations:
             - name: artSecret
