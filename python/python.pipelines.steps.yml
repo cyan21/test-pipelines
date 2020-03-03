@@ -21,6 +21,21 @@ pipelines:
             - name: registry_eu
             - name: artSecret
 
+      - name: python_test 
+        type: Bash
+        configuration:
+          inputSteps:
+          - name: python_docker_build 
+          integrations:
+            - name: artSecret
+          outputResources:
+            - name: python_BuildInfo 
+        execution:
+          onExecute:
+            - echo "Testing ..." 
+#            - curl -fL https://getcli.jfrog.io | sh &&  chmod 755 jfrog  
+#            - ./jfrog rt c --interactive=false --url=${art_url} --user=${int_artSecret_user} --apikey=${int_artSecret_apikey} art7 && ./jfrog rt use art7 && ./jfrog rt ping
+
       - name: python_scan
         type: XrayScan
         configuration:
@@ -40,7 +55,7 @@ pipelines:
           comment:               Artifact passed Xray Scan
           copy:                  false
           inputResources:
-            - name:    scanned_python_Build_Info    # optional
+            - name: scanned_python_BuildInfo    # optional
               trigger: true       
           outputResources:
             - name: promoted_python_BuildInfo 

@@ -16,14 +16,14 @@ resources:
       buildName: ${pipeline_name} 
       buildNumber: ${run_number} 
 
-  - name: scanned_python_BuildInfo 
+  - name: scanned_python_BuildInfo
     type: BuildInfo 
     configuration:
       sourceArtifactory: artifactory_eu
       buildName: ${pipeline_name} 
       buildNumber: ${run_number} 
 
-  - name: promoted_python_BuildInfo 
+  - name: promoted_python_BuildInfo
     type: BuildInfo 
     configuration:
       sourceArtifactory: artifactory_eu
