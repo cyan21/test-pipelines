@@ -41,7 +41,7 @@ pipelines:
         execution:
           onExecute:
             - echo "Testing ..." 
-            - sudo apt install curl -y
+            - apt install curl -y
             - curl -fL https://getcli.jfrog.io | sh &&  chmod 755 jfrog  
             - ./jfrog rt c --interactive=false --url=${art_url} --user=${int_artSecret_user} --apikey=${int_artSecret_apikey} art7 && ./jfrog rt use art7 && ./jfrog rt ping
             - ./jfrog rt use art7 
