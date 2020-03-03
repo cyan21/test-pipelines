@@ -6,8 +6,8 @@ pipelines:
           art_url: http://artifactory-eu.soleng-emea-staging.jfrog.team/artifactory
           art_repo: asgardian-pypi
           art_repo_promotion: asgardian-pypi-prod-local
-          JFROG_CLI_HOME=/opt/jfrog 
-          JFROG_CLI_OFFER_CONFIG=false
+          JFROG_CLI_HOME: /opt/jfrog 
+          JFROG_CLI_OFFER_CONFIG: false
     steps:
 #      - name: python_docker_build
 #        type: DockerBuild
