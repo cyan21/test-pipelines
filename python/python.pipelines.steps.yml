@@ -51,7 +51,7 @@ pipelines:
             - chmod 777 -R /opt/conda/lib/python3.7/site-packages/ /opt/jfrog
             - chmod -R u+x ${res_python_pipeline_src_resourcePath}/scripts
             - ${res_python_pipeline_src_resourcePath}/scripts/init.sh -r ${art_repo} -s art7 
-            - ${res_python_pipeline_src_resourcePath}/build.sh -i ${pipeline_name} -n ${run_number} -t release -r ${art_repo} -a art7 -m demo -s ${art_url} 
+            - ${res_python_pipeline_src_resourcePath}/scripts/build.sh -i ${pipeline_name} -n ${run_number} -t release -r ${art_repo} -a art7 -m demo -s ${art_url} 
             - echo "END" 
 
       - name: python_scan
