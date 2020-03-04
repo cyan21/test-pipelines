@@ -45,7 +45,7 @@ pipelines:
             - echo "Testing ..." 
             - apt install curl -y
             - mkdir /opt/jfrog
-            - curl -fL https://getcli.jfrog.io | sh &&  chmod 755 jfrog  && mv /usr/local/bin/
+            - curl -fL https://getcli.jfrog.io | sh &&  chmod 755 jfrog  && mv jfrog /usr/local/bin/
             - jfrog rt c --interactive=false --url=${art_url} --user=${int_artSecret_user} --apikey=${int_artSecret_apikey} art7 && ./jfrog rt use art7 && jfrog rt ping
             - jfrog rt use art7 
             - chmod 777 -R /opt/conda/lib/python3.7/site-packages/ /opt/jfrog
