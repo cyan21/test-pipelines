@@ -49,10 +49,9 @@ pipelines:
             - ./jfrog rt c --interactive=false --url=${art_url} --user=${int_artSecret_user} --apikey=${int_artSecret_apikey} art7 && ./jfrog rt use art7 && ./jfrog rt ping
             - ./jfrog rt use art7 
             - chmod 777 -R /opt/conda/lib/python3.7/site-packages/ /opt/jfrog
-            - ls -la 
-            - chmod -R u+x python-greetings/scripts
-            - python-greetings/scripts/init.sh -r ${art_repo} -s art7 
-            - python-greetings/scripts/build.sh -i ${pipeline_name} -n ${run_number} -t release -r ${art_repo} -a art7 -m demo -s ${art_url} 
+            - chmod -R u+x ${res_python_pipeline_src_resourcePath}/scripts
+            - ${res_python_pipeline_src_resourcePath}/scripts/init.sh -r ${art_repo} -s art7 
+            - ${res_python_pipeline_src_resourcePath}/build.sh -i ${pipeline_name} -n ${run_number} -t release -r ${art_repo} -a art7 -m demo -s ${art_url} 
             - echo "END" 
 
       - name: python_scan
