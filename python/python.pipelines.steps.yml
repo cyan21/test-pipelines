@@ -23,7 +23,7 @@ pipelines:
 #            - name: registry_eu
 #            - name: artSecret
 
-      - name: python_test 
+      - name: python_build 
         type: Bash
         configuration:
           inputResources:
@@ -57,6 +57,7 @@ pipelines:
       - name: python_scan
         type: XrayScan
         configuration:
+          failOnScan: false
           waitUntilFinish: true
           inputResources:
             - name: python_BuildInfo
