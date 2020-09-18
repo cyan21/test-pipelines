@@ -17,6 +17,7 @@ pipelines:
       - name: package_app
         type: PackageDebian
         configuration:
+          binaryLocation: /toto/tutu
           integrations:
             - name: artifactory_eu
           inputResources:
