@@ -16,6 +16,7 @@ pipelines:
             - echo salut
       - name: package_app
         type: PackageDebian
+        syntaxVersion: 1.0.0
         configuration:
           binaryLocation: /toto/tutu
           integrations:
