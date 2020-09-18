@@ -14,3 +14,15 @@ pipelines:
             - echo truc
           onExecute:
             - echo salut
+      - name: package_app
+        type: PackageDebian
+        configuration:
+          integrations:
+            - name: artifactory_eu
+          inputResources:
+            - name: src_code_test_ext
+        execution:
+          onStart:
+            - echo test
+          onExecute:
+            - echo test test test
