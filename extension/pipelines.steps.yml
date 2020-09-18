@@ -9,5 +9,8 @@ pipelines:
             - name: artifactory_eu
           inputResources:
             - name: src_code_test_ext
-        onExecute:
-          - echo salut
+        execution:
+          onStart:
+            - echo truc
+          onExecute:
+            - echo salut
