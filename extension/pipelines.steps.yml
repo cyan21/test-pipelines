@@ -20,8 +20,8 @@ pipelines:
           binaryLocation: /toto/tutu
           integrations:
             - name: artifactory_eu
-          inputResources:
-            - name: src_code_test_ext
+          inputSteps:
+            - name: init
         execution:
           onStart:
             - echo test
