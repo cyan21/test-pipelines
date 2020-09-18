@@ -1,0 +1,8 @@
+resources:
+  - name: src_code_test_ext
+    type: GitRepo
+    configuration:
+      gitProvider: yann_github
+      path: cyan21/test-pipelines
+      branches:
+        include: master

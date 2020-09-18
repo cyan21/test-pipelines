@@ -1,0 +1,13 @@
+apiVersion: v1.1
+pipelines:
+  - name: test_extension 
+    steps:
+      - name: init
+        type: Bash
+        configuration:
+          integrations:
+            - name: artifactory_eu
+          inputResources:
+            - name: src_code_test_ext
+        onExecute:
+          - echo salut
