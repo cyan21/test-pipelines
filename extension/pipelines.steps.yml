@@ -19,9 +19,9 @@ pipelines:
 #        syntaxVersion: 1.0.0
         configuration:
 #          binaryLocation: /toto/tutu
-          binaryArtifactoryLocation: toto/tutu/**/*.jar
-          buildName: test
-          buildNumber: 21
+          binaryArtifactoryLocation: "**/multi-module-application*.jar"
+          buildName: java_webapp
+          buildNumber: 5
           integrations:
             - name: artifactory_eu
           inputSteps:
