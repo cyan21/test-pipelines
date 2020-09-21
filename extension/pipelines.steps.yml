@@ -18,7 +18,10 @@ pipelines:
         type: PkgDebian
 #        syntaxVersion: 1.0.0
         configuration:
-          binaryLocation: /toto/tutu
+#          binaryLocation: /toto/tutu
+          binaryArtifactoryLocation: toto/tutu/**/*.jar
+          buildName: test
+          buildNumber: 21
           integrations:
             - name: artifactory_eu
           inputSteps:
