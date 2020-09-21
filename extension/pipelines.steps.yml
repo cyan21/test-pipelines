@@ -21,7 +21,7 @@ pipelines:
 #          binaryLocation: /toto/tutu
           binaryArtifactoryLocation: "**/multi-module-application*.jar"
           buildName: backapp_mvn
-          buildNumber: 5
+          buildNumber: 2
           integrations:
             - name: artifactory_eu
           inputSteps:
