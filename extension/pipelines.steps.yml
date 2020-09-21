@@ -20,8 +20,8 @@ pipelines:
         configuration:
 #          binaryLocation: /toto/tutu
           binaryArtifactoryLocation: "**/multi-module-application*.jar"
-          buildName: java_webapp
-          buildNumber: 5
+          buildName: backapp_mvn
+          buildNumber: 2
           integrations:
             - name: artifactory_eu
           inputSteps:
