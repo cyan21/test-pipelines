@@ -16,12 +16,13 @@ pipelines:
             - echo salut
       - name: package_app
         type: PackageDebian
-        syntaxVersion: 1.0.0
+#        syntaxVersion: 1.0.0
         configuration:
           binaryLocation: "**/multi-module-application*.jar"
           buildName: backapp_mvn
           buildNumber: 2
           appExtension: "jar"
+          debianPkgName: "dark"
           debianBuildName: "my-super-build"
           targetDebianRepo: "ninja-debian-release"
           integrations:
