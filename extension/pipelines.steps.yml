@@ -16,7 +16,7 @@ pipelines:
             - echo salut
       - name: package_app
         type: PackageDebian
-#        syntaxVersion: 1.0.0
+        syntaxVersion: 1.0.0
         configuration:
           binaryLocation: "**/multi-module-application*.jar"
           buildName: backapp_mvn
