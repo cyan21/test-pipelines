@@ -22,6 +22,9 @@ pipelines:
           binaryArtifactoryLocation: "**/multi-module-application*.jar"
           buildName: backapp_mvn
           buildNumber: 2
+          appExtension: "jar"
+          debianBuildName: "my-super-build"
+          targetDebianRepo: "ninja-debian-release"
           integrations:
             - name: artifactory_eu
           inputSteps:
