@@ -15,11 +15,10 @@ pipelines:
           onExecute:
             - echo salut
       - name: package_app
-        type: PkgDebian
+        type: PackageDebian
 #        syntaxVersion: 1.0.0
         configuration:
-#          binaryLocation: /toto/tutu
-          binaryArtifactoryLocation: "**/multi-module-application*.jar"
+          binaryLocation: "**/multi-module-application*.jar"
           buildName: backapp_mvn
           buildNumber: 2
           appExtension: "jar"
