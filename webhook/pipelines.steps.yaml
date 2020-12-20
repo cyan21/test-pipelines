@@ -16,5 +16,5 @@ pipelines:
           onStart:
             - echo onStart
           onExecute:
-            - echo "$res_update-prop_payload" | jq '.' > payload.json
-            - read_json payload.json "LESSER_SECRET_FORMULA"
+            - echo "$res_update-prop_payload" #| jq '.' > payload.json
+#            - read_json payload.json "LESSER_SECRET_FORMULA"
