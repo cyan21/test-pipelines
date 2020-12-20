@@ -1,0 +1,5 @@
+resources:
+  - name:       update-prop
+    type:       IncomingWebhook
+    configuration:
+      webhookName:  trigger_pipe
