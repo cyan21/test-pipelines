@@ -1,5 +1,5 @@
 pipelines:
-  - name: k8s_frontapp_npm
+  - name: test_webhook
     configuration:
       environmentVariables:
         readOnly:
