@@ -11,10 +11,10 @@ pipelines:
         type: Bash
         configuration:
           integrations:
-            - name: minion
+            - name: access_minion
         execution:
           onStart:
             - echo onStart
           onExecute:
-            - echo "it's working"
-            - uname -a
+            - ssh -i ${int_access_minion_sshKey_privateKey} 10.41.0.57 whoami
+            - ssh -i ${int_access_minion_sshKey_privateKey} 10.41.0.57 "uname -a"
