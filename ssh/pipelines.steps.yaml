@@ -10,8 +10,8 @@ pipelines:
       - name: deploy_to_minion
         type: Bash
         configuration:
-          outputResources:
-            - name: access_minion
+          integration:
+            - name: minion
         execution:
           onStart:
             - echo onStart
