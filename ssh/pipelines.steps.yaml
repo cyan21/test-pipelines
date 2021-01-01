@@ -10,7 +10,7 @@ pipelines:
       - name: deploy_to_minion
         type: Bash
         configuration:
-          integration:
+          integrations:
             - name: minion
         execution:
           onStart:
