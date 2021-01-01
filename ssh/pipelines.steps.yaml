@@ -16,5 +16,5 @@ pipelines:
           onStart:
             - echo onStart
           onExecute:
-            - ssh -i ${int_minion_sshKey_privateKey} 10.41.0.57 whoami
-            - ssh -i ${int_minion_sshKey_privateKey} 10.41.0.57 "uname -a"
+            - ssh 10.41.0.57 whoami
+            - echo  ${int_minion_sshKey_privateKey}
