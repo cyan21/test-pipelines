@@ -17,4 +17,4 @@ pipelines:
             - echo onStart
           onExecute:
             - echo "it's working"
-            - whoami
+            - uname -a
