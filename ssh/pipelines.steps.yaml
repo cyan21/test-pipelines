@@ -1,0 +1,20 @@
+pipelines:
+  - name: test_ssh
+    configuration:
+      environmentVariables:
+        readOnly:
+          envVarNpmRepo: avengers-npm
+          envVarGenericRepo: avengers-generic
+          envVarGenericPromoteRepo: avengers-rc-generic-local
+    steps:
+      - name: deploy_to_minion
+        type: Bash
+        configuration:
+          inputResources:
+            - name: access_minion
+        execution:
+          onStart:
+            - echo onStart
+          onExecute:
+            - echo "it's working"
+            - whoami

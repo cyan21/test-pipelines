@@ -1,0 +1,7 @@
+resources:
+  - name: access_minion
+    type: VmCluster
+    configuration:
+      sshKey: minion
+      targets:
+        - 10.41.0.57
