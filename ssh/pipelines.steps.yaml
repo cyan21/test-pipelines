@@ -10,11 +10,11 @@ pipelines:
       - name: deploy_to_minion
         type: Bash
         configuration:
-          integration:
-            - name: access_minion
+          integrations:
+            - name: minion
         execution:
           onStart:
             - echo onStart
           onExecute:
-            - ssh -i ${int_access_minion_sshKey_privateKey} 10.41.0.57 whoami
-            - ssh -i ${int_access_minion_sshKey_privateKey} 10.41.0.57 "uname -a"
+            - ssh -i ${int_minion_sshKey_privateKey} 10.41.0.57 whoami
+            - ssh -i ${int_minion_sshKey_privateKey} 10.41.0.57 "uname -a"
