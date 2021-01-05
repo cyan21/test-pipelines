@@ -6,3 +6,5 @@ resources:
       path: cyan21/test-pipelines
       branches:
         include: master
+      buildOn:
+         commit: false
