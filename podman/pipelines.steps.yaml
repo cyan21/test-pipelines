@@ -24,6 +24,13 @@ pipelines:
             - jfrog --version
             - cli_path=$(dirname "$(which jfrog)") && curl -fL https://getcli.jfrog.io | sh &&  mv ./jfrog "$cli_path/" && ls -l "$cli_path/jfrog"  && jfrog --version
             - jfrog rt c show
+            - >
+              cat /etc/containers/registries.conf
+              lineToUpdate=`grep -n "\[registries.insecure" /etc/containers/registries.conf | cut -d: -f1`
+              let "lineToUpdate+=1"
+              echo ${lineToUpdate}
+              sed -i "${lineToUpdate}s/[]/[kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team]/"
+            - cat /etc/containers/registries.conf
       - name: build_with_podman
         type: Bash
         configuration:
@@ -42,5 +49,5 @@ pipelines:
             - ls -l ${res_src_code_test_podman_resourcePath}
             - cd ${res_src_code_test_podman_resourcePath}/podman && ls -l
             - podman build -t test:0.1 . 
-
-
+            - jfrog rt podman-push kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 kaivengers-docker --build-name=podman --build-number=1
+            - jfrog rt bp podman 1
