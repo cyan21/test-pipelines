@@ -50,9 +50,9 @@ pipelines:
             - name: artifactory_eu
         execution:
           onExecute:
-            - jfrog rt c show | jfrog --version
+            - jfrog rt c show && jfrog --version
             - ls -l ${res_src_code_test_podman_resourcePath}
-            - cd ${res_src_code_test_podman_resourcePath}/podman | ls -l
+            - cd ${res_src_code_test_podman_resourcePath}/podman && ls -l
             - podman build -t kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 . 
             - jfrog rt podman-push kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 kaivengers-release-docker-local --build-name=podman --build-number=1
             - jfrog rt bp podman 1
