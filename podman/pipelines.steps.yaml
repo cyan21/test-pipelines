@@ -29,7 +29,7 @@ pipelines:
             # - echo ${lineToUpdate}
             # - >
             #   sed -i "${lineToUpdate}s/[]/[kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team]/"
-            - grep -q "\[registries.insecure" /etc/containers/registries.conf
+            - grep "registries.insecure" /etc/containers/registries.conf
             - if [ $? -eq 1 ]; then echo -e "\n[registries.insecure]\nregistries=['kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team']" >> /etc/containers/registries.conf; fi
             - cat /etc/containers/registries.conf
       - name: build_with_podman
