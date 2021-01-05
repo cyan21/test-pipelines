@@ -17,7 +17,7 @@ pipelines:
             # - sudo systemctl restart docker
             # - sudo cat /etc/docker/daemon.json
             - echo ${operating_system}
-            - > 
+            - | 
               podman --version
               if [ $? -ne 0 ]; then
                 echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list
