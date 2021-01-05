@@ -23,10 +23,12 @@ pipelines:
             - cli_path=$(dirname "$(which jfrog)") && curl -fL https://getcli.jfrog.io | sh &&  mv ./jfrog "$cli_path/" && ls -l "$cli_path/jfrog"  && jfrog --version
             - jfrog rt c show
             - cat /etc/containers/registries.conf
-            - lineToUpdate=`grep -n "\[registries.insecure" /etc/containers/registries.conf | cut -d: -f1`
+            - >
+              lineToUpdate=`grep -n "\[registries.insecure" /etc/containers/registries.conf | cut -d: -f1`
             - let "lineToUpdate+=1"
             - echo ${lineToUpdate}
-            - sed -i "${lineToUpdate}s/[]/[kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team]/"
+            - >
+              sed -i "${lineToUpdate}s/[]/[kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team]/"
             - cat /etc/containers/registries.conf
       - name: build_with_podman
         type: Bash
