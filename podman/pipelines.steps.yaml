@@ -17,10 +17,10 @@ pipelines:
             # - sudo systemctl restart docker
             # - sudo cat /etc/docker/daemon.json
             - echo ${operating_system}
-            - if ! which podman ; then sudo echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/ /" | sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list && sudo curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/Release.key | sudo apt-key add - ; sudo apt update && sudo apt -y install podman; fi
+            - if ! which podman ; then sudo echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/ /" |  sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list && sudo curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/Release.key | sudo apt-key add - && sudo apt update && sudo apt -y install podman; fi
             - podman info
             - jfrog --version
-            - cli_path=$(dirname "$(which jfrog)") && curl -fL https://getcli.jfrog.io | sh &&  mv ./jfrog "$cli_path/" && ls -l "$cli_path/jfrog"  && jfrog --version
+            - cli_path=$(dirname "$(which jfrog)") | curl -fL https://getcli.jfrog.io | sh |  mv ./jfrog "$cli_path/" | ls -l "$cli_path/jfrog"  | jfrog --version
             - jfrog rt c show
             - cat /etc/containers/registries.conf
             - >
@@ -48,9 +48,9 @@ pipelines:
             - name: artifactory_eu
         execution:
           onExecute:
-            - jfrog rt c show && jfrog --version
+            - jfrog rt c show | jfrog --version
             - ls -l ${res_src_code_test_podman_resourcePath}
-            - cd ${res_src_code_test_podman_resourcePath}/podman && ls -l
+            - cd ${res_src_code_test_podman_resourcePath}/podman | ls -l
             - podman build -t kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 . 
             - jfrog rt podman-push kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 kaivengers-release-docker-local --build-name=podman --build-number=1
             - jfrog rt bp podman 1
