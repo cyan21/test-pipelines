@@ -7,6 +7,8 @@ pipelines:
           affinityGroup: together
           runtime:
             type: host
+          integrations:
+            - name: artifactory_eu
         execution:
           onExecute:
             # - sudo mkdir -p /etc/docker 
@@ -19,5 +21,26 @@ pipelines:
             - curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/Release.key | sudo apt-key add -
             - sudo apt update && sudo apt -y install podman
             - podman info
+            - jfrog --version
             - cli_path=$(dirname "$(which jfrog)") && curl -fL https://getcli.jfrog.io | sh &&  mv ./jfrog "$cli_path/" && ls -l "$cli_path/jfrog"  && jfrog --version
+            - jfrog rt c show
+      - name: build_with_podman
+        type: Bash
+        configuration:
+          affinityGroup: together
+          runtime:
+            type: host
+          inputSteps:
+            - name: install_podman
+          inputResources:
+            - name: src_code_test_podman
+          integrations:
+            - name: artifactory_eu
+        execution:
+          onExecute:
+            - jfrog rt c show && jfrog --version
+            - ls -l ${res_src_code_test_podman_resourcePath}
+            - cd ${res_src_code_test_podman_resourcePath}/podman && ls -l
+            - podman build -t test:0.1 . 
+
 
