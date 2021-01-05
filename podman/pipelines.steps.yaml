@@ -36,6 +36,8 @@ pipelines:
         type: Bash
         configuration:
           affinityGroup: together
+          environmentVariables:
+            JFROG_CLI_LOG_LEVEL: DEBUG
           runtime:
             type: host
           inputSteps:
