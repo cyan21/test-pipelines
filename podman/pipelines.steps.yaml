@@ -17,7 +17,7 @@ pipelines:
             # - sudo systemctl restart docker
             # - sudo cat /etc/docker/daemon.json
             - echo ${operating_system}
-            - if ! which podman ; then sudo echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/ /" |  sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list && sudo curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/Release.key | sudo apt-key add - && sudo apt update && sudo apt -y install podman; fi
+            - if ! which podman ; then sudo echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/ /" |  sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list && sudo curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/Release.key | sudo apt-key add - && sudo apt update && sleep 30 && sudo apt -y install podman; fi
             - podman info
             - jfrog --version
             - cli_path=$(dirname "$(which jfrog)") 
