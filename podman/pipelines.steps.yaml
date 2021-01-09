@@ -1,31 +1,52 @@
 pipelines:
   - name: test_podman
     steps:
-      - name: install_podman
-        type: Bash
+      - name: build_with_podman_custom
+        type: PodmanBuild
         configuration:
           affinityGroup: together
+          environmentVariables:
+            JFROG_CLI_LOG_LEVEL: DEBUG
           runtime:
             type: host
+          inputResources:
+            - name: src_code_test_podman
           integrations:
             - name: artifactory_eu
-        execution:
-          onExecute:
-            # - sudo mkdir -p /etc/docker 
-            # - > 
-            #   sudo jq -n  "{\"insecure-registries\": [\"${envVarDockerRepoUrl}\"]}" > /etc/docker/daemon.json
-            # - sudo systemctl restart docker
-            # - sudo cat /etc/docker/daemon.json
-            - echo ${operating_system}
-            - if ! which podman ; then sudo echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/ /" |  sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list && sudo curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/Release.key | sudo apt-key add - && sudo apt update && sleep 30 && sudo apt -y install podman; fi
-            - podman info
-            - jfrog --version
-            - cli_path=$(dirname "$(which jfrog)") 
-            - curl -fL https://getcli.jfrog.io | sh &&  mv ./jfrog "$cli_path/" && ls -l "$cli_path/jfrog"  
-            - jfrog --version
-            - jfrog rt c show
-            - cat /etc/containers/registries.conf
-            - >
+        # execution:
+        #   onExecute:
+        #     - jfrog rt c show && jfrog --version
+        #     - ls -l ${res_src_code_test_podman_resourcePath}
+        #     - cd ${res_src_code_test_podman_resourcePath}/podman && ls -l
+        #     - podman build -t kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 . 
+        #     - jfrog rt podman-push kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 kaivengers-docker --build-name=podman --build-number=1
+        #     - jfrog rt bp podman 1
+
+      # - name: install_podman
+      #   type: Bash
+      #   configuration:
+      #     affinityGroup: together
+      #     runtime:
+      #       type: host
+      #     integrations:
+      #       - name: artifactory_eu
+      #   execution:
+      #     onExecute:
+      #       # - sudo mkdir -p /etc/docker 
+      #       # - > 
+      #       #   sudo jq -n  "{\"insecure-registries\": [\"${envVarDockerRepoUrl}\"]}" > /etc/docker/daemon.json
+      #       # - sudo systemctl restart docker
+      #       # - sudo cat /etc/docker/daemon.json
+      #       - echo ${operating_system}
+      #       - if ! which podman ; then sudo echo "deb https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/ /" |  sudo tee /etc/apt/sources.list.d/devel:kubic:libcontainers:stable.list && sudo curl -L https://download.opensuse.org/repositories/devel:/kubic:/libcontainers:/stable/x${operating_system}/Release.key | sudo apt-key add - && sudo apt update && sleep 30 && sudo apt -y install podman; fi
+      #       - podman info
+      #       - jfrog --version
+      #       - cli_path=$(dirname "$(which jfrog)") 
+      #       - curl -fL https://getcli.jfrog.io | sh &&  mv ./jfrog "$cli_path/" && ls -l "$cli_path/jfrog"  
+      #       - jfrog --version
+      #       - jfrog rt c show
+      #       - cat /etc/containers/registries.conf
+      #       - >
               if ! grep "registries.insecure" /etc/containers/registries.conf; then echo -e "\n[registries.insecure]\nregistries=['kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team']" >> /etc/containers/registries.conf; fi  
             # - >
             #   lineToUpdate=`grep -n "\[registries.insecure" /etc/containers/registries.conf | cut -d: -f1`
@@ -34,25 +55,25 @@ pipelines:
             # - >
             #   sed -i "${lineToUpdate}s/[]/[kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team]/"
             - cat /etc/containers/registries.conf
-      - name: build_with_podman
-        type: Bash
-        configuration:
-          affinityGroup: together
-          environmentVariables:
-            JFROG_CLI_LOG_LEVEL: DEBUG
-          runtime:
-            type: host
-          inputSteps:
-            - name: install_podman
-          inputResources:
-            - name: src_code_test_podman
-          integrations:
-            - name: artifactory_eu
-        execution:
-          onExecute:
-            - jfrog rt c show && jfrog --version
-            - ls -l ${res_src_code_test_podman_resourcePath}
-            - cd ${res_src_code_test_podman_resourcePath}/podman && ls -l
-            - podman build -t kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 . 
-            - jfrog rt podman-push kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 kaivengers-docker --build-name=podman --build-number=1
-            - jfrog rt bp podman 1
+      # - name: build_with_podman
+      #   type: Bash
+      #   configuration:
+      #     affinityGroup: together
+      #     environmentVariables:
+      #       JFROG_CLI_LOG_LEVEL: DEBUG
+      #     runtime:
+      #       type: host
+      #     inputSteps:
+      #       - name: install_podman
+      #     inputResources:
+      #       - name: src_code_test_podman
+      #     integrations:
+      #       - name: artifactory_eu
+      #   execution:
+      #     onExecute:
+      #       - jfrog rt c show && jfrog --version
+      #       - ls -l ${res_src_code_test_podman_resourcePath}
+      #       - cd ${res_src_code_test_podman_resourcePath}/podman && ls -l
+      #       - podman build -t kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 . 
+      #       - jfrog rt podman-push kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/test:0.1 kaivengers-docker --build-name=podman --build-number=1
+      #       - jfrog rt bp podman 1
