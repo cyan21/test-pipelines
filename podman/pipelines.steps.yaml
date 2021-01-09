@@ -54,7 +54,7 @@ pipelines:
             # - echo ${lineToUpdate}
             # - >
             #   sed -i "${lineToUpdate}s/[]/[kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team]/"
-            - cat /etc/containers/registries.conf
+            # - cat /etc/containers/registries.conf
       # - name: build_with_podman
       #   type: Bash
       #   configuration:
