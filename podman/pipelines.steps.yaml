@@ -2,7 +2,7 @@ pipelines:
   - name: test_podman
     steps:
       - name: build_with_podman_custom
-        type: PodmanBuild
+        type: oci/PodmanBuild
         configuration:
           affinityGroup: together
           environmentVariables:
