@@ -47,7 +47,7 @@ pipelines:
       #       - jfrog rt c show
       #       - cat /etc/containers/registries.conf
       #       - >
-              if ! grep "registries.insecure" /etc/containers/registries.conf; then echo -e "\n[registries.insecure]\nregistries=['kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team']" >> /etc/containers/registries.conf; fi  
+      #        if ! grep "registries.insecure" /etc/containers/registries.conf; then echo -e "\n[registries.insecure]\nregistries=['kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team']" >> /etc/containers/registries.conf; fi  
             # - >
             #   lineToUpdate=`grep -n "\[registries.insecure" /etc/containers/registries.conf | cut -d: -f1`
             # - let "lineToUpdate+=1"
