@@ -14,7 +14,7 @@ pipelines:
           integrations:
             - name: artifactory_eu
         execution:
-          onExecute:
+          onStart:
             - jfrog rt c show && jfrog --version
         #     - ls -l ${res_src_code_test_podman_resourcePath}
         #     - cd ${res_src_code_test_podman_resourcePath}/podman && ls -l
