@@ -36,7 +36,7 @@ pipelines:
           dockerFileLocation: podman
           ociImageName: kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/podman-test
           ociImageTag: 0.0.1
-          pushImage: false
+          pushImage: true
           artifactoryTargetRepoName: kaivengers-docker
           buildName: yann-podman-test
           buildNumber: 1
