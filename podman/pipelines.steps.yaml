@@ -38,8 +38,8 @@ pipelines:
           ociImageTag: 0.0.1
           pushImage: false
           artifactoryTargetRepoName: kaivengers-docker
-          # buildName: yann-podman-test
-          # buildNumber: 1
+          buildName: yann-podman-test
+          buildNumber: 1
           inputResources:
             - name: src_code_test_podman
           integrations:
