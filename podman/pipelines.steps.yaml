@@ -30,8 +30,8 @@ pipelines:
           affinityGroup: together
           environmentVariables:
             JFROG_CLI_LOG_LEVEL: DEBUG
-          # runtime:
-          #   type: host
+          runtime:
+            type: host
           dockerFileName: Dockerfile
           dockerFileLocation: podman
           ociImageName: kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/podman-test
