@@ -41,7 +41,7 @@ pipelines:
           artifactoryTargetRepoName: kaivengers-docker
           buildName: yann-podman-test
           buildNumber: 1
-          dependency: "ninja-rc-mvn-local/com/example/multi-module-application/1.1.0/multi-module-application-1.1.0.jar"
+          buildDependency: "ninja-rc-mvn-local/com/example/multi-module-application/1.1.0/multi-module-application-1.1.0.jar"
           inputResources:
             - name: src_code_test_podman
           integrations:
