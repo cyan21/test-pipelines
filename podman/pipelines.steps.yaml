@@ -1,32 +1,8 @@
 pipelines:
   - name: test_podman
     steps:
-      - name: build_with_buildah_custom
-        type: oci/BuildahBuild
-        configuration:
-          affinityGroup: together
-          environmentVariables:
-            JFROG_CLI_LOG_LEVEL: DEBUG
-          runtime:
-            type: host
-          dockerFileName: Dockerfile
-          dockerFileLocation: podman
-          ociImageName: kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/podman-test
-          ociImageTag: 0.0.1
-          pushImage: true
-          artifactoryTargetRepoName: kaivengers-docker
-          buildName: yann-buildah-test
-          buildNumber: 1
-          inputResources:
-            - name: src_code_test_podman
-          integrations:
-            - name: artifactory_eu
-        execution:
-          onStart:
-            - jfrog rt c show && jfrog --version
-
-      # - name: build_with_podman_custom
-      #   type: oci/PodmanBuild
+      # - name: build_with_buildah_custom
+      #   type: oci/BuildahBuild
       #   configuration:
       #     affinityGroup: together
       #     environmentVariables:
@@ -39,7 +15,7 @@ pipelines:
       #     ociImageTag: 0.0.1
       #     pushImage: true
       #     artifactoryTargetRepoName: kaivengers-docker
-      #     buildName: yann-podman-test
+      #     buildName: yann-buildah-test
       #     buildNumber: 1
       #     inputResources:
       #       - name: src_code_test_podman
@@ -48,6 +24,31 @@ pipelines:
       #   execution:
       #     onStart:
       #       - jfrog rt c show && jfrog --version
+
+      - name: build_with_podman_custom
+        type: oci/PodmanBuild
+        configuration:
+          affinityGroup: together
+          environmentVariables:
+            JFROG_CLI_LOG_LEVEL: DEBUG
+          runtime:
+            type: host
+          dockerFileName: Dockerfile
+          dockerFileLocation: podman
+          ociImageName: kaivengers-docker.artifactory-eu-yannc4-0.soleng-emea-staging.jfrog.team/podman-test
+          ociImageTag: 0.0.1
+          pushImage: true
+          artifactoryTargetRepoName: kaivengers-docker
+          buildName: yann-podman-test
+          buildNumber: 1
+          dependency: "ninja-rc-mvn-local/com/example/multi-module-application/1.1.0/multi-module-application-1.1.0.jar"
+          inputResources:
+            - name: src_code_test_podman
+          integrations:
+            - name: artifactory_eu
+        execution:
+          onStart:
+            - jfrog rt c show && jfrog --version
 
 
       # - name: install_podman
