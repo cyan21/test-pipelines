@@ -1,5 +1,5 @@
 pipelines:
-  - name: Deploy chart
+  - name: lastMile
     configuration:
       environmentVariables:
         readOnly:
