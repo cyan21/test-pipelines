@@ -19,3 +19,23 @@ pipelines:
             - echo "$res_update_prop_payload" | jq '.' > payload.json
             - cat payload.json
 #            - read_json payload.json "LESSER_SECRET_FORMULA"
+            # Get Helm Chart (repo key/name) from payload
+            - repo=`jq -r '.data.repo_key' payload.json`
+            - chart=`jq -r '.data.name' payload.json`
+            - > 
+              echo '{"files": [{"pattern": "$repo/$chart"}]}' > helmChart.filespec
+            - cat helmChart.filespec
+            # Get image name and tag (props on Helm Chart)
+            - backImg=`jfrog rt s --spec=helmchart.filespec --spec-vars="repo=${repo};chart=${chart}" | jq -r '.[].props."image.back"[]'` 
+            - echo ${backImg}
+            - backImgName=`echo ${backImg} | cut -d/ -f1`
+            - backImgTag=`echo ${backImg} | cut -d/ -f2`
+            - echo "result = ${backImgName};${backImgTag}"
+            # Get image repo in Edge node
+            - > 
+              echo '{"files": [{"pattern": "**/${backImg}/manifest.json"}]}' > docker.filespec
+            - cat docker.filespec
+            - dockerRepo=`jfrog rt s --spec=docker.filespec | jq -r ".[].path" | cut -d/ -f1`
+            - echo $dockerRepo
+            # Check if image exists
+            - jfrog rt curl api/docker/${dockerRepo}/v2/${backImgName}/tags/list  | grep "${backImgTag}"
