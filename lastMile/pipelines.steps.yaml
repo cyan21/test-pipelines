@@ -38,7 +38,7 @@ pipelines:
             - echo "result = ${backImgName};${backImgTag}"
             # Get image repo in Edge node
             - > 
-              echo '{"files": [{"pattern": "**/${backImg}/manifest.json"}]}' > docker.filespec
+              echo "{\"files\": [{\"pattern\": "**/${backImg}/manifest.json\"}]}" > docker.filespec
             - cat docker.filespec
             - dockerRepo=`jfrog rt s --spec=docker.filespec | jq -r ".[].path" | cut -d/ -f1`
             - echo $dockerRepo
