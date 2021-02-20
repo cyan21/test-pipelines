@@ -26,6 +26,7 @@ pipelines:
             # Get Helm Chart (repo key/name) from payload
             - repo=`jq -r '.data.repo_key' payload.json`
             - chart=`jq -r '.data.name' payload.json`
+            - echo $repo $chart
             - > 
               echo '{"files": [{"pattern": "${repo}/${chart}"}]}' > helmChart.filespec
             - cat helmChart.filespec
