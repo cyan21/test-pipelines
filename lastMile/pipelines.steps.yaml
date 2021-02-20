@@ -12,7 +12,7 @@ pipelines:
         configuration:
           inputResources:
             - name: update_prop
-          integration:
+          integrations:
             - name: edge_us
         execution:
           onStart:
