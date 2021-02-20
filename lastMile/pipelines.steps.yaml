@@ -12,6 +12,8 @@ pipelines:
         configuration:
           inputResources:
             - name: update_prop
+          integration:
+            - name: edge_us
         execution:
           onStart:
             - echo onStart
@@ -19,6 +21,8 @@ pipelines:
             - echo "$res_update_prop_payload" | jq '.' > payload.json
             - cat payload.json
 #            - read_json payload.json "LESSER_SECRET_FORMULA"
+            - jfrog rt c show
+            - jfrog rt ping
             # Get Helm Chart (repo key/name) from payload
             - repo=`jq -r '.data.repo_key' payload.json`
             - chart=`jq -r '.data.name' payload.json`
