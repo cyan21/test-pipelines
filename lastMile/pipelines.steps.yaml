@@ -27,7 +27,7 @@ pipelines:
             - repo=`jq -r '.data.repo_key' payload.json`
             - chart=`jq -r '.data.name' payload.json`
             - > 
-              echo '{"files": [{"pattern": "$repo/$chart"}]}' > helmChart.filespec
+              echo '{"files": [{"pattern": "${repo}/${chart}"}]}' > helmChart.filespec
             - cat helmChart.filespec
             # Get image name and tag (props on Helm Chart)
             - backImg=`jfrog rt s --spec=helmChart.filespec --spec-vars="repo=${repo};chart=${chart}" | jq -r '.[].props."image.back"[]'` 
