@@ -8,7 +8,7 @@ pipelines:
           envVarGenericPromoteRepo: avengers-rc-generic-local
     steps:
       - name: check_avaibility
-        type: CheckImagesReadiness
+        type: lastMile/CheckImagesReadiness
 #        syntaxVersion: 1.0.0
         configuration:
           propSearch: true
