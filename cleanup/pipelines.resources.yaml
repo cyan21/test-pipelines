@@ -27,4 +27,4 @@ resources:
   - name: my_cron
     type: CronTrigger
     configuration:
-      interval: 0 0 23 * * ? 2021
+      interval: 0 23 * * *
