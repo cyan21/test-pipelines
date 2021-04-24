@@ -23,3 +23,8 @@ resources:
           - repoD
           timeUnit: day
           timeInterval: 55
+
+  - name: my_cron
+    type: CronTrigger
+    configuration:
+      interval: 0 0 23 * * ? 2021

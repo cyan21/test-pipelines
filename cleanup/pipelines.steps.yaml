@@ -7,6 +7,7 @@ pipelines:
           dryRun: false
           inputResources:
             - name: my_cleanup_policies
+            - name: my_cron
           integrations:
             - name: artifactory_eu
         execution:
