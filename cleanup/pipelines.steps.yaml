@@ -4,7 +4,7 @@ pipelines:
       - name: build_with_podman_custom
         type: cleanup/Artifact
         configuration:
-          dryRun: true
+          dryRun: false
           inputResources:
             - name: my_cleanup_policy
           integrations:
