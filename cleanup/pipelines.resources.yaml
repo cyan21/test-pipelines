@@ -11,15 +11,15 @@ resources:
     type: cleanup/Policy
     configuration:
       cleanupPolicies:
-        name: policy_A
-        repositories: 
-        - repoA
-        - repoB
-        timeUnit: year
-        timeInterval: 10
-      # - name: policy_B
-      #   repositories: 
-      #   - repoC
-      #   - repoD
-      #   timeUnit: day
-      #   timeInterval: 55
+        - name: policy_A
+          repositories: 
+          - repoA
+          - repoB
+          timeUnit: year
+          timeInterval: 10
+        - name: policy_B
+          repositories: 
+          - repoC
+          - repoD
+          timeUnit: day
+          timeInterval: 55
