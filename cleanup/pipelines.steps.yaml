@@ -1,0 +1,14 @@
+pipelines:
+  - name: test_cleanup
+    steps:
+      - name: build_with_podman_custom
+        type: cleanup/Artifact
+        configuration:
+          dryRun: true
+          inputResources:
+            - name: my_cleanup_policy
+          integrations:
+            - name: artifactory_eu
+        execution:
+          onStart:
+            - jfrog rt c show && jfrog --version

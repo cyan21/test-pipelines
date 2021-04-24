@@ -1,0 +1,9 @@
+resources:
+  - name: my_cleanup_policy
+    type: cleanup/Policy
+    configuration:
+      repositories: 
+      - repoA
+      - repoB
+      timeUnit: year
+      timeInterval: 10
