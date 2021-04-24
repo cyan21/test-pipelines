@@ -1,12 +1,12 @@
 pipelines:
   - name: test_cleanup
     steps:
-      - name: build_with_podman_custom
+      - name: apply_cleanup
         type: cleanup/Artifact
         configuration:
           dryRun: false
           inputResources:
-            - name: my_cleanup_policy
+            - name: my_cleanup_policies
           integrations:
             - name: artifactory_eu
         execution:
