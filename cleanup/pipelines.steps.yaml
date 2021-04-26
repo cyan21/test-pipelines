@@ -5,8 +5,16 @@ pipelines:
         type: cleanup/Artifact
         configuration:
           dryRun: false
+          policies:
+            - name: policy_X               
+              repositories:
+                - monday
+                - friday
+                - sunday                
+              timeUnit: year
+              timeInterval: 2 
           inputResources:
-            - name: my_cleanup_policies
+            # - name: my_cleanup_policies
             - name: my_cron
           integrations:
             - name: artifactory_eu
