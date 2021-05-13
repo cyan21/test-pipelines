@@ -11,8 +11,8 @@ pipelines:
             inventory: uat
           inputResources:
             # - name: my_cron
-            - name: vm_group
-            - name: wh_jenkins
+            - name: vm_group1
+            - name: wh_jenkins1
           integrations:
             - name: artifactory_eu
         execution:
