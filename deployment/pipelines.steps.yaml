@@ -10,7 +10,9 @@ pipelines:
             role: wildfly
             inventory: uat
           inputResources:
-            - name: my_cron
+            # - name: my_cron
+            - name: vm_group
+            - name: wh_jenkins
           integrations:
             - name: artifactory_eu
         execution:
