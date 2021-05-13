@@ -4,7 +4,9 @@ pipelines:
       - name: webapp_deploy_config
         type: deployment/Webapp
         configuration:
-          ansibleInfo:
+          technology: java
+          appserver: jboss
+          ansible:
             role: wildfly
             inventory: uat
           inputResources:
