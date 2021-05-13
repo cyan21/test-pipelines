@@ -1,0 +1,16 @@
+pipelines:
+  - name: test_cleanup
+    steps:
+      - name: webapp_deploy_config
+        type: deployment/Webapp
+        configuration:
+          ansibleInfo:
+            role: wildfly
+            inventory: uat
+          inputResources:
+            - name: my_cron
+          integrations:
+            - name: artifactory_eu
+        execution:
+          onStart:
+            - jfrog rt c show && jfrog --version
