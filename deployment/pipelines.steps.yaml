@@ -1,11 +1,11 @@
 pipelines:
-  - name: test_cleanup
+  - name: test_deployment
     steps:
-      - name: webapp_deploy_config
+      - name: deploy_webapp
         type: deployment/Webapp
         configuration:
           technology: java
-          appserver: jboss
+          appServer: jboss
           ansible:
             role: wildfly
             inventory: uat
