@@ -4,8 +4,12 @@ pipelines:
       - name: deploy_webapp
         type: deployment/Webapp
         configuration:
-          technology: java
-          appServer: jboss
+          docker: 
+            repo: swampup301.jfrog.io/awesome-app
+            tag: 1.3.0
+          webApp: 
+            path: myrepo/awesome-app.3.0.0.jar
+            technology: wildfly
           ansible:
             role: wildfly
             inventory: uat
