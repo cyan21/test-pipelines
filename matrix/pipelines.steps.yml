@@ -49,8 +49,8 @@ pipelines:
           #     runtime:              
  
           exclude:                   # optional, array of combinations
-            - nodePool:              # that are not executed 
-              environmentVariables:
+            # - nodePool:              # that are not executed 
+            - environmentVariables:
                 animal:    goat               # - Set 2
                 mineral:   iron
                 vegetable: broccoli
