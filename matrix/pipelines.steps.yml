@@ -4,6 +4,9 @@ pipelines:
     steps:
       - name: matrix_fan_out_example
         type: Bash
+        configuration:
+          inputResources:
+            - my_cron
         execution:
           onStart:
             - echo "Starting up"
