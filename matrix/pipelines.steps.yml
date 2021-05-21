@@ -48,12 +48,12 @@ pipelines:
           #       env2: xyz
           #     runtime:              
  
-          exclude:                   # optional, array of combinations
-            # - nodePool:              # that are not executed 
+          exclude:                   # optional, array of combinations that are not executed 
+            # - nodePool:              
             - environmentVariables:
                 animal:    goat               # - Set 2
                 mineral:   iron
-                vegetable: broccoli
+#                vegetable: broccoli
               runtime:
                 type: image
                 image:
