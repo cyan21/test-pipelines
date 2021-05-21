@@ -2,7 +2,7 @@ pipelines:
   - name: test_matrix
     steps:
       - name: matrix_fan_out_example
-        type: Bash
+        type: PreMatrix
         # configuration:
         #   inputResources:
         #     - my_cron
