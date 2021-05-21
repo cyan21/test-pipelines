@@ -27,25 +27,45 @@ pipelines:
               vegetable: broccoli
             - animal:    lizard             # - Set 3
               mineral:   lead
-      
           runtimes:                         # Runtimes for steplets
             - type: image
               image:
                 auto:
                   language: java
                   versions:
-                    - 15
-                    
+                    - 15          
             - type: image
               image:
                 auto:
                   language: go
                   versions:
                     - 1.15.2
+          fastFail: false          # default false.
+          allowFailures:             # optional, array of combinations
+            - nodePool:              # that are allowed to fail 
+              environmentVariables:
+                env1: abc                             
+                env2: xyz
+              runtime:              
+ 
+          exclude:                   # optional, array of combinations
+            - nodePool:              # that are not executed 
+              environmentVariables:
+                animal:    goat               # - Set 2
+                mineral:   iron
+                vegetable: broccoli
+              runtime: 
+                image:
+                  auto:
+                    language: go
+                    versions:
+                      - 1.15.2
         execution:
           onExecute:
             - echo "I am executing matrix steplet ${steplet_id}"
             - echo "Envs animal= $animal , mineral = $mineral , vegetable = $vegetable"
             - >
               echo "Runtime image name\: $step_image_name | Runtime image tag\: $step_image_tag"
+            - if [ $animal == "goat" ];then exit 1; fi
             - sleep 60
+
