@@ -48,3 +48,4 @@ pipelines:
             - echo "Envs animal= $animal , mineral = $mineral , vegetable = $vegetable"
             - >
               echo "Runtime image name\: $step_image_name | Runtime image tag\: $step_image_tag"
+              sleep 60
