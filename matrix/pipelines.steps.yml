@@ -34,7 +34,7 @@ pipelines:
                 auto:
                   language: java
                   versions:
-                    - openjdk15
+                    - 15
                     
             - type: image
               image:
