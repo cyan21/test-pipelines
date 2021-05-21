@@ -54,12 +54,13 @@ pipelines:
                 animal:    goat               # - Set 2
                 mineral:   iron
                 vegetable: broccoli
-              runtime: 
-                image:
-                  auto:
-                    language: go
-                    versions:
-                      - 1.15.2
+              runtime:
+                - type: image
+                  image:
+                    auto:
+                      language: go
+                      versions:
+                        - 1.15.2
         execution:
           onExecute:
             - echo "I am executing matrix steplet ${steplet_id}"
