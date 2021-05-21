@@ -1,0 +1,5 @@
+resources:
+  - name: my_cron
+    type: CronTrigger
+    configuration:
+      interval: 0 23 * * *

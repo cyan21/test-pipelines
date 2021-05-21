@@ -1,0 +1,39 @@
+pipelines:
+  - name: test_parallel
+    steps:
+      - name: parallel_init
+        type: Bash
+        execution:
+          onStart:
+            - echo "Starting up"
+          onExecute:
+            - echo "Execute"
+      - name: parallel_step_1
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: parallel_init
+        execution:
+          onExecute:
+            - sleep 30
+      - name: parallel_step_2
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: parallel_init
+        execution:
+          onExecute:
+            - sleep 50
+      - name: parallel_step_3
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: parallel_init
+        execution:
+          onExecute:
+            - sleep 60
+      - name: parallel_end_step
+        type: Bash
+        execution:
+          onExecute:
+            - echo "End !!"
