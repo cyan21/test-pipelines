@@ -34,6 +34,11 @@ pipelines:
             - sleep 60
       - name: parallel_end_step
         type: Bash
+        configuration:
+          inputSteps:
+            - name: parallel_step_1
+            - name: parallel_step_2
+            - name: parallel_step_3
         execution:
           onExecute:
             - echo "End !!"
