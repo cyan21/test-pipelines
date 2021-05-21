@@ -4,7 +4,6 @@ pipelines:
     steps:
       - name: matrix_fan_out_example
         type: Bash
-        configuration:
         execution:
           onStart:
             - echo "Starting up"
