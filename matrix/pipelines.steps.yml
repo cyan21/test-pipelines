@@ -1,7 +1,7 @@
 pipelines:
   - name: test_matrix
     steps:
-      - name: matrix_fan_out_example
+      - name: pre_matrix
         type: PreMatrix
         # configuration:
         #   inputResources:
