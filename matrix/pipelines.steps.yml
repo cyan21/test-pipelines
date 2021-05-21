@@ -54,7 +54,7 @@ pipelines:
                 animal:    goat               # - Set 2
                 mineral:   iron
                 vegetable: broccoli
-              runtime:
+#              runtime:
                 # type: image
                 # image:
                 #   auto:
