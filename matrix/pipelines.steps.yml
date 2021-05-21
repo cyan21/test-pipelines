@@ -41,12 +41,12 @@ pipelines:
                   versions:
                     - 1.15.2
           fastFail: false          # default false.
-          allowFailures:             # optional, array of combinations
-            - nodePool:              # that are allowed to fail 
-              environmentVariables:
-                env1: abc                             
-                env2: xyz
-              runtime:              
+          # allowFailures:             # optional, array of combinations
+          #   - nodePool:              # that are allowed to fail 
+          #     environmentVariables:
+          #       env1: abc                             
+          #       env2: xyz
+          #     runtime:              
  
           exclude:                   # optional, array of combinations
             - nodePool:              # that are not executed 
@@ -55,12 +55,12 @@ pipelines:
                 mineral:   iron
                 vegetable: broccoli
               runtime:
-                - type: image
-                  image:
-                    auto:
-                      language: go
-                      versions:
-                        - 1.15.2
+                type: image
+                image:
+                  auto:
+                    language: go
+                    versions:
+                      - 1.15.2
         execution:
           onExecute:
             - echo "I am executing matrix steplet ${steplet_id}"
