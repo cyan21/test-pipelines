@@ -24,6 +24,7 @@ pipelines:
         execution:
           onExecute:
             - sleep 50
+            - exit 1
       - name: parallel_step_3
         type: Bash
         configuration:
