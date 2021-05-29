@@ -71,4 +71,4 @@ pipelines:
             - cd Greeting
             - conan profile new --detect default
             - conan profile show default
-            - conan create . Greeting/1.0.0@cyan21/test 
+            - conan create . greeting/1.0.0@cyan21/test 
