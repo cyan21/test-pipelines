@@ -65,6 +65,6 @@ pipelines:
           #             - 1.15.2
         execution:
           onExecute:
-            - pwd & ls -l 
+            - pwd && ls -l && ls -l pre_matrix
             - conan profile show default
             - conan create . Greeting/1.0.0@cyan21/test 
