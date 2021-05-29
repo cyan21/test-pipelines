@@ -65,6 +65,7 @@ pipelines:
           #             - 1.15.2
         execution:
           onExecute:
-            - pwd && ls -l && ls -l pre_matrix
+            - pwd && ls -l && ls -l pre_matrix/dependencyState && ls -l pre_matrix/output
+            - tree pre_matrix
             - conan profile show default
             - conan create . Greeting/1.0.0@cyan21/test 
