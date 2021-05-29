@@ -24,7 +24,6 @@ pipelines:
           inputSteps:
             - name: pre_matrix
           integrations:
-            - name: my_github
             - name: artifactory_eu
         stepletMultipliers:
           environmentVariables: 
@@ -84,3 +83,17 @@ pipelines:
             - conan profile show default
             - conan create . greeting/1.0.0@cyan21/test -s build_type=${build_type}
             - conan upload "greeting*" -r art1 -c
+      - name: post_matrix
+        type: PostMatrix
+        configuration:
+          inputSteps:
+            - name: matrix_example
+          integrations:
+            - name: artifactory_eu
+        execution:
+          onExecute:
+            - ls -l 
+            - echo "aggregate build info and push it"
+        #     - conan remote add art1 ${int_artifactory_eu_url}/api/conan/urs-conan
+        #     - conan user -p ${res_artifactory_eu_apikey} -r art1 ${int_artifactory_eu_user}
+        #     - conan remote list
