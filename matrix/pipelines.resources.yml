@@ -3,6 +3,6 @@ resources:
     type: GitRepo
     configuration:
       gitProvider: my_github
-      path: cyan21/test-pipelines
+      path: cyan21/CPP_Demo
       branches:
         include: conan 
