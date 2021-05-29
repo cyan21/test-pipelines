@@ -16,6 +16,8 @@ pipelines:
           #   - name: pre_matrix
           inputResources:
             - name: src_greeting_lib
+          integrations:
+            - name: my_github
         stepletMultipliers:
           environmentVariables: 
             - build_type: Release 
