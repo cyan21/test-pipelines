@@ -20,6 +20,9 @@ pipelines:
         configuration:
           inputSteps:
             - name: pre_matrix
+          integrations:
+            - name: my_github
+            - name: artifactory_eu
         stepletMultipliers:
           environmentVariables: 
             - build_type: Release 
@@ -65,6 +68,10 @@ pipelines:
           #           versions:
           #             - 1.15.2
         execution:
+          onStart:
+            - conan remote add art1 ${int_artifactory_eu_url}/api/conan/urs-conan
+            - conan user -p ${res_artifactory_eu_apikey} -r art1 ${int_artifactory_eu_user}
+            - conan remote list
           onExecute:
             - pwd 
             - cd pre_matrix/dependencyState/resources/src_greeting_lib
@@ -73,6 +80,4 @@ pipelines:
             - conan profile new --detect default
             - conan profile show default
             - conan create . greeting/1.0.0@cyan21/test 
-            - conan remote list
-            - conan user -p ${res_artifactory_eu_apikey} -r art1 ${int_artifactory_eu_user}
             - conan upload "greeting*" -r art1
