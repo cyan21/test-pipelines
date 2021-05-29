@@ -65,6 +65,6 @@ pipelines:
           #             - 1.15.2
         execution:
           onExecute:
-            - cd ${res_src_greeting_lib_resourcePath}/Greeting
+            - pwd & ls -l 
             - conan profile show default
             - conan create . Greeting/1.0.0@cyan21/test 
