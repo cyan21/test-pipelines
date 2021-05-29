@@ -1,23 +1,24 @@
 pipelines:
   - name: test_matrix
     steps:
-      # - name: pre_matrix
-      #   type: PreMatrix
-      #   execution:
-      #     onStart:
-      #       - echo "Starting up"
-      #     onExecute:
-      #       - echo "Execute"
-      - name: matrix_example
-        type: Matrix
-        stepMode: Bash
+      - name: pre_matrix
+        type: PreMatrix
         configuration:
-          # inputSteps:
-          #   - name: pre_matrix
           inputResources:
             - name: src_greeting_lib
           integrations:
             - name: my_github
+        execution:
+          onStart:
+            - echo "Starting up"
+          onExecute:
+            - echo "Execute"
+      - name: matrix_example
+        type: Matrix
+        stepMode: Bash
+        configuration:
+          inputSteps:
+            - name: pre_matrix
         stepletMultipliers:
           environmentVariables: 
             - build_type: Release 
