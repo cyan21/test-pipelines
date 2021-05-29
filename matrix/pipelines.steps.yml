@@ -68,7 +68,7 @@ pipelines:
             - pwd 
             - cd pre_matrix/dependencyState/resources/src_greeting_lib
             - ls -l 
-            - conan profile show default
+            - cd Greeting
             - conan profile new --detect
             - conan profile show default
             - conan create . Greeting/1.0.0@cyan21/test 
