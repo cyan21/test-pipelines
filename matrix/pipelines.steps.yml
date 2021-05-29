@@ -66,6 +66,7 @@ pipelines:
         execution:
           onExecute:
             - pwd && ls -l && ls -l pre_matrix/dependencyState && ls -l pre_matrix/output
+            - apt install -y tree 
             - tree pre_matrix
             - conan profile show default
             - conan create . Greeting/1.0.0@cyan21/test 
