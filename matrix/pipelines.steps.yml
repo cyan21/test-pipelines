@@ -66,8 +66,9 @@ pipelines:
         execution:
           onExecute:
             - pwd 
-            - ls -l pre_matrix/dependencyState
-            - ls -l pre_matrix/dependencyState/resources
-            - ls -l pre_matrix/output
+            - cd pre_matrix/dependencyState/resources/src_greeting_lib
+            - ls -l 
+            - conan profile show default
+            - conan profile new --detect
             - conan profile show default
             - conan create . Greeting/1.0.0@cyan21/test 
