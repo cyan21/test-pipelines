@@ -1,5 +1,8 @@
 resources:
-  - name: my_cron
-    type: CronTrigger
+  - name: src_greeting_lib
+    type: GitRepo
     configuration:
-      interval: 0 23 * * *
+      gitProvider: my_github
+      path: cyan21/test-pipelines
+      branches:
+        include: conan 
