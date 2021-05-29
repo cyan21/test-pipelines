@@ -67,7 +67,7 @@ pipelines:
           onExecute:
             - pwd 
             - ls -l pre_matrix/dependencyState
-            - ls -l pre_matrix/dependencyState/resource
+            - ls -l pre_matrix/dependencyState/resources
             - ls -l pre_matrix/output
             - conan profile show default
             - conan create . Greeting/1.0.0@cyan21/test 
