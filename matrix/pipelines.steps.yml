@@ -71,7 +71,7 @@ pipelines:
         execution:
           onStart:
             - conan remote add art1 ${int_artifactory_eu_url}/api/conan/urs-conan
-            - conan user -p ${res_artifactory_eu_apikey} -r art1 ${int_artifactory_eu_user}
+            - conan user -p ${int_artifactory_eu_apikey} -r art1 ${int_artifactory_eu_user}
             - conan remote list
           onExecute:
             - pwd 
@@ -80,5 +80,5 @@ pipelines:
             - cd Greeting
             - conan profile new --detect default
             - conan profile show default
-            - conan create . greeting/1.0.0@cyan21/test 
+            - conan create . greeting/1.0.0@cyan21/test -s build_type=${build_type}
             - conan upload "greeting*" -r art1
