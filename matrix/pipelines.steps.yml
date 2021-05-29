@@ -9,8 +9,9 @@ pipelines:
           integrations:
             - name: my_github
         #     - name: artifactory_eu
-        # execution:
-        #   onExecute:
+        execution:
+          onExecute:
+            - echo "pulled code"
         #     - conan remote add art1 ${int_artifactory_eu_url}/api/conan/urs-conan
         #     - conan user -p ${res_artifactory_eu_apikey} -r art1 ${int_artifactory_eu_user}
         #     - conan remote list
