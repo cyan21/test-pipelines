@@ -1,5 +1,5 @@
 pipelines:
-  - name: Jenkins integration demo
+  - name: Jenkins_integration_demo
     steps:
       - name: jenkins_demo_run_build
         type: Bash
