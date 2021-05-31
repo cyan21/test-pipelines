@@ -1,0 +1,33 @@
+pipelines:
+  - name: Jenkins integration demo
+    steps:
+      - name: jenkins_demo_run_build
+        type: Bash
+        execution:
+          onExecute:
+            - echo "Build Build Build"
+
+      - name: jenkins_demo_call_jenkins
+        type: Jenkins
+        configuration:
+          jenkinsJobName: yann-demo-integration
+          inputSteps:
+            - name: jenkins_demo_run_build
+          buildParameters:
+            imageName: test
+            imageTag: 1.0.0
+          integrations:
+            - name: jenkins_yann
+          outputResources:
+            - name: pb_jenkins_job_results
+
+      - name: jenkins_demo_promote_build
+        type: Bash
+        configuration:
+          inputResources:
+            - name: pb_jenkins_job_results
+        execution:
+          onExecute:
+            - echo "PROMOTION !!!"
+            - echo ${pb_jenkins_job_results_passing}
+            - echo ${pb_jenkins_job_results_failing}

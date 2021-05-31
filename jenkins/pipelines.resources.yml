@@ -1,0 +1,6 @@
+resources:
+  - name: pb_jenkins_job_results
+    type: PropertyBag
+    configuration:
+      passing: 0
+      failing: 0
