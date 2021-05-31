@@ -29,5 +29,5 @@ pipelines:
         execution:
           onExecute:
             - echo "PROMOTION !!!"
-            - echo ${pb_jenkins_job_results_passing}
-            - echo ${pb_jenkins_job_results_failing}
+            - echo ${res_pb_jenkins_job_results_passing}
+            - echo ${res_pb_jenkins_job_results_failing}
