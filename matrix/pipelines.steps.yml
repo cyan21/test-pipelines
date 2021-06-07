@@ -82,7 +82,7 @@ pipelines:
             - conan profile new --detect default
             - conan profile show default
             - conan create . greeting/1.0.0@cyan21/test -s build_type=${build_type}
-            - conan upload "greeting*" -r art1 -c
+            - conan upload "greeting*" -r art1 -c --all
       - name: post_matrix
         type: PostMatrix
         configuration:
