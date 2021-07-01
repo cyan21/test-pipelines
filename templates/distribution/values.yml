@@ -15,7 +15,7 @@ DemoAppDistributionResources:
     isSigned: true
     dryRun: 
       create: false
-      distribute: true
+      distribute: false
   aql:
     name: aql_demo_app
     edgeRepo: docker-local
