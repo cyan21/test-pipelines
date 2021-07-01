@@ -2,10 +2,11 @@ DemoApp:
   pipelineName: demo_distribute_java
   artifactoryIntegration: artifactory_eu
   distributionIntegration: distribution_eu
+  webhookIntegration: trigger_dist
 
 DemoAppDistributionResources:
   webhook:
-    name: trigger_dist
+    name: wh_jenkins
   buildInfo:
     resourceName: bi_docker_java
   releaseBundle:
