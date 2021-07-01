@@ -1,0 +1,42 @@
+DemoApp:
+  pipelineName: demo_distribute_java
+  artifactoryIntegration: artifactory_eu
+  distributionIntegration: distribution_eu
+
+DemoAppDistributionResources:
+  webhook:
+    name: trigger_dist
+  buildInfo:
+    resourceName: bi_docker_java
+  releaseBundle:
+    resourceName: rb_demo_java
+    name: demo-java-app
+    isSigned: true
+    dryRun: 
+      create: false
+      distribute: true
+  aql:
+    name: aql_demo_app
+    edgeRepo: docker-local
+    mapping:
+      - name: python
+        input: "urs-generic-release-local/(.*)"
+        output: "release-generic-local/$1"
+      - name: docker
+        input: "urs-docker-release-local/(.*)"
+        output: "release-docker-local/$1"
+  distributionRule:
+    name: dr_rb_demo_java
+    serviceName: "*"         
+    siteName: "*"
+    cityName: "*"
+    countryCodes:
+      - "LA"
+
+DemoAppDistributionSteps:
+  export:
+    name: export_var_java
+  createRB:
+    name: init_rb_java
+  distributeRB:
+    name: distribite_rb_java
