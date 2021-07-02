@@ -3,8 +3,18 @@ DemoApp:
   artifactoryIntegration: artifactory_eu
   distributionIntegration: distribution_eu
   webhookIntegration: trigger_dist
+  scmIntegration: yann_github
 
 DemoAppDistributionResources:
+  scm:
+    name: src_distrib_java
+    path: cyan21/test-pipelines
+    branches:
+      include: master
+    files:
+      include: templates/distribution/*
+    buildOn:
+        commit: true
   webhook:
     name: wh_jenkins
   buildInfo:
