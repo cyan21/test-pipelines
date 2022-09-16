@@ -7,23 +7,23 @@ pipelines:
         jfrogCliVersion: 2
       steps:
   #Ping instances
-        - name: Ping
-          type: Bash
-          configuration:
-            integrations:
-              - name: {{ .Values.jpdIntegrationName }}
-          execution:
-            onStart:
-              - echo {{ .Values.jpdIntegrationName }}
-              - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegrationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegrationName }}_accessToken}" --server-name psemea
-#              - configure_jfrog_cli --artifactory-url ${int_yann_platform_token_url}/artifactory --access-token ${int_yann_platform_token_accessToken} --server-name psemea
-            onExecute:
-              - | 
-                for i in 1 2 3; do 
-                    echo "[INFO] iteration $i ..."
-                    jf rt ping --server-id psemea
-                    sleep 5
-                done
+#         - name: Ping
+#           type: Bash
+#           configuration:
+#             integrations:
+#               - name: {{ .Values.jpdIntegrationName }}
+#           execution:
+#             onStart:
+#               - echo {{ .Values.jpdIntegrationName }}
+#               - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegrationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegrationName }}_accessToken}" --server-name psemea
+# #              - configure_jfrog_cli --artifactory-url ${int_yann_platform_token_url}/artifactory --access-token ${int_yann_platform_token_accessToken} --server-name psemea
+#             onExecute:
+#               - | 
+#                 for i in 1 2 3; do 
+#                     echo "[INFO] iteration $i ..."
+#                     jf rt ping --server-id psemea
+#                     sleep 5
+#                 done
         - name: Ping_2
           type: utils/ping
           configuration:
