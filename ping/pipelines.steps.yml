@@ -25,9 +25,3 @@ pipelines:
                     jf rt ping --server-id psemea
                     sleep 5
                 done
-
-                    #          if [ $? -eq 0 ]; then
-                    #   echo "[INFO] iteration $i : OK"
-                    # else
-                    #   echo "[ERROR] iteration $i : KO"
-                    # fi
