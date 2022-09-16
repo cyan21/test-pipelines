@@ -28,9 +28,9 @@ pipelines:
           type: utils/ping
           configuration:
             integrations:
-              - name: {{ .Values.jpdIntegrationName }}
+              - name: {{ .Values.jpdIntegrationName[0] }}
             integrationList: 
-              - {{ .Values.jpdIntegrationName }}
-              - yannsbx_platform_token
+              - {{ .Values.jpdIntegrationName[Ø] }}
+              - {{ .Values.jpdIntegrationName[1] }}
             iteration: 2
             sleepBetweenIteration: 5
