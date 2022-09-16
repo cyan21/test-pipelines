@@ -11,8 +11,8 @@ pipelines:
               - name: yann_platform_token
           execution:
             onStart:
-#              - configure_jfrog_cli --artifactory-url ${int_{{.Values.jpdIntegationName}}_url}/artifactory --access-token ${int_{{.Values.jpdIntegationName}}_accessToken} --server-name psemea
-              - configure_jfrog_cli --artifactory-url ${int_yann_platform_token_url}/artifactory --access-token ${int_yann_platform_token_accessToken} --server-name psemea
+              - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegationName }}_accessToken}" --server-name psemea
+#              - configure_jfrog_cli --artifactory-url ${int_yann_platform_token_url}/artifactory --access-token ${int_yann_platform_token_accessToken} --server-name psemea
             onExecute:
               - jf rt ping --server-id psemea
          
