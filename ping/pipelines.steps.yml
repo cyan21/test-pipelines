@@ -16,7 +16,16 @@ pipelines:
 #              - configure_jfrog_cli --artifactory-url ${int_yann_platform_token_url}/artifactory --access-token ${int_yann_platform_token_accessToken} --server-name psemea
             onExecute:
               - >- 
-                jf rt ping --server-id psemea
-                for i in 1
+                for i in 1 2 3
+                do 
+                    echo "[INFO] iteration $i ..."
+                    jf rt ping --server-id psemea
+                    if [ $? -eq 0 ]; then
+                      echo "[INFO] iteration $i : OK"
+                    else
+                      echo "[ERROR] iteration $i : KO"
+                    fi
+                    sleep 5
+                done
 
          
