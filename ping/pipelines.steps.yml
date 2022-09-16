@@ -28,9 +28,8 @@ pipelines:
           type: utils/ping
           configuration:
             integrations:
-              - name: {{ .Values.jpdIntegrationName.0 }}
+              - name: {{ .Values.jpdIntegrationName 0 }}
             integrationList: 
-              - {{ .Values.jpdIntegrationName.Ø }}
-              - {{ .Values.jpdIntegrationName.1 }}
+              - {{ .Values.jpdIntegrationName Ø }}
             iteration: 2
             sleepBetweenIteration: 5
