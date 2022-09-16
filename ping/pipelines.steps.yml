@@ -31,5 +31,6 @@ pipelines:
               - name: {{ .Values.jpdIntegrationName }}
             integrationList: 
               - {{ .Values.jpdIntegrationName }}
+              - yannsbx_platform_token
             iteration: 2
             sleepBetweenIteration: 5
