@@ -24,3 +24,12 @@ pipelines:
                     jf rt ping --server-id psemea
                     sleep 5
                 done
+        - name: Ping_2
+          type: utils/ping
+          configuration:
+            integrations:
+              - name: {{ .Values.jpdIntegrationName }}
+            integrationList: 
+              - {{ .Values.jpdIntegrationName }}
+            iteration: 2
+            sleepBetweenIteration: 5
