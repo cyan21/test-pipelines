@@ -8,7 +8,7 @@ pipelines:
           type: Bash
           configuration:
             integrations:
-              - name: {{ .Values.jpdIntegationName }}
+              - name: "{{ .Values.jpdIntegationName }}"
           execution:
             onStart:
               - configure_jfrog_cli --artifactory-url ${int_{{.Values.jpdIntegationName}}_url}/artifactory --access-token ${int_{{.Values.jpdIntegationName}}_accessToken} --server-name psemea
