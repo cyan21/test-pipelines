@@ -1,0 +1,17 @@
+pipelines:
+    - name: HealthCheck
+      configuration:
+        jfrogCliVersion: 2
+      steps:
+  #Ping instances
+        - name: Ping
+          type: Bash
+          configuration:
+            integrations:
+              - name: {{ .Values.jpdIntegationName }}
+          execution:
+            onStart:
+              - configure_jfrog_cli --artifactory-url ${int_{{.Values.jpdIntegationName}}_url}/artifactory --access-token ${int_{{.Values.jpdIntegationName}}_accessToken} --server-name psemea
+            onExecute:
+              - jf rt ping --server-id psemea
+         

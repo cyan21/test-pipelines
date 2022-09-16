@@ -1,0 +1,4 @@
+myRepo:
+  gitProvider: ych_github
+  path: cyan21/test-pipelines
+jpdIntegationName: yann_platform_token
