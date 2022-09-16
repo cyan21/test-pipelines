@@ -3,4 +3,4 @@ myRepo:
   path: cyan21/test-pipelines
 jpdIntegrationName:
   - yann_platform_token
-  - yannsbx_platform_token
+  - yannsbx_platform_access
