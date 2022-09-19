@@ -1,19 +1,6 @@
 template: true   # required for local templates.
 valuesFilePath: ./values.yml
 
-resources:
-  - name: myFirstRepo
-    type: GitRepo
-    configuration:
-      # SCM integration where the repository is located
-      gitProvider: {{ .Values.myRepo.gitProvider }} # this will be replaced from values.yml
-      # Repository path, including org name/repo name
-      path: {{ .Values.myRepo.path }} # this will be replaced from values.yml
-      branches:
-        # Specifies which branches will trigger dependent steps
-        include: master
-
-
 pipelines:
     - name: HealthCheck
       configuration:
@@ -53,17 +40,18 @@ pipelines:
             affinityGroup: together
             # inputSteps:
             #   - name: Ping_2
-            # integrations:
-            # {{- range .Values.jpdIntegrationName }}
-            #   - name: "{{ . }}"
-            # {{- end }}
-              # - name: artifactory_eu
+            integrations:
+            {{- range .Values.jpdIntegrationName }}
+              - name: "{{ . }}"
+            {{- end }}
           execution:
             onStart:
-              - echo {{ .Values.jpdIntegrationName }} | cut -d" " -f2 | tr -d ]
-              # - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegrationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegrationName }}_accessToken}" --server-name psemea
-              # - jf -v
-              # - jf c s
+              - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f2 | tr -d ])
+              - url="int_saas_dr_url"
+              - token="int_saas_dr_url_token"
+              - configure_jfrog_cli --artifactory-url "${url}/artifactory" --access-token "${token}" --server-name saas_dr
+              - jf -v
+              - jf c s
             # onExecute:
             #   - | 
             #     for i in 1 2 3; do 
