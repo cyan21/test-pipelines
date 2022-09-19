@@ -40,6 +40,8 @@ pipelines:
         - name: Update_status_yml
           type: Bash
           configuration:
+            inputResources:
+              - name: Ping_2
             integrations:
             {{- range .Values.jpdIntegrationName }}
               - name: "{{ . }}"
