@@ -6,9 +6,9 @@ resources:
     type: GitRepo
     configuration:
       # SCM integration where the repository is located
-      gitProvider: {{ .Values.myRepo.gitProvider }} # this will be replaced from values.yml
+      gitProvider: ych_github_pipe # this will be replaced from values.yml
       # Repository path, including org name/repo name
-      path: {{ .Values.myRepo.path }} # this will be replaced from values.yml
+      path: cyan21/test-pipelines # this will be replaced from values.yml
       branches:
         # Specifies which branches will trigger dependent steps
         include: master
@@ -24,11 +24,11 @@ pipelines:
 #           type: Bash
 #           configuration:
 #             integrations:
-#               - name: {{ .Values.jpdIntegrationName }}
+#               - name: [yann_platform_token yannsbx_platform_access]
 #           execution:
 #             onStart:
-#               - echo {{ .Values.jpdIntegrationName }}
-#               - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegrationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegrationName }}_accessToken}" --server-name psemea
+#               - echo [yann_platform_token yannsbx_platform_access]
+#               - configure_jfrog_cli --artifactory-url "${int_[yann_platform_token yannsbx_platform_access]_url}/artifactory" --access-token "${int_[yann_platform_token yannsbx_platform_access]_accessToken}" --server-name psemea
 # #              - configure_jfrog_cli --artifactory-url ${int_yann_platform_token_url}/artifactory --access-token ${int_yann_platform_token_accessToken} --server-name psemea
 #             onExecute:
 #               - | 
@@ -42,9 +42,11 @@ pipelines:
         #   configuration:
         #     affinityGroup: together
         #     integrations:
-        #     {{- range .Values.jpdIntegrationName }}
-        #       - name: "{{ . }}"
-        #     {{- end }}
+        #
+        #       - name: "yann_platform_token"
+        #
+        #       - name: "yannsbx_platform_access"
+        #
         #     iteration: 2
         #     sleepBetweenIteration: 5
         - name: Update_status_yml
@@ -54,14 +56,16 @@ pipelines:
             # inputSteps:
             #   - name: Ping_2
             # integrations:
-            # {{- range .Values.jpdIntegrationName }}
-            #   - name: "{{ . }}"
-            # {{- end }}
+            #
+            #   - name: "yann_platform_token"
+            #
+            #   - name: "yannsbx_platform_access"
+            #
               # - name: artifactory_eu
           execution:
             onStart:
-              - echo {{ jpdIntegrationName }} 
-              # - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegrationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegrationName }}_accessToken}" --server-name psemea
+              - echo yannsbx_platform_access 
+              # - configure_jfrog_cli --artifactory-url "${int_[yann_platform_token yannsbx_platform_access]_url}/artifactory" --access-token "${int_[yann_platform_token yannsbx_platform_access]_accessToken}" --server-name psemea
               # - jf -v
               # - jf c s
             # onExecute:
