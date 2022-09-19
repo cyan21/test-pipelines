@@ -49,7 +49,8 @@ pipelines:
               - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f2 | tr -d ])
               - url="int_saas_dr_url"
               - token="int_saas_dr_url_token"
-              - configure_jfrog_cli --artifactory-url "${url}/artifactory" --access-token "${token}" --server-name saas_dr
+              - echo ${!url}
+              - configure_jfrog_cli --artifactory-url "${!url}/artifactory" --access-token "${!token}" --server-name saas_dr
               - jf -v
               - jf c s
             # onExecute:
