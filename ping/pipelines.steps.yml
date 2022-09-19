@@ -44,13 +44,13 @@ pipelines:
             {{- range .Values.jpdIntegrationName }}
               - name: "{{ . }}"
             {{- end }}
-              - name: artifactory_eu
+              # - name: artifactory_eu
           execution:
             onStart:
-              - echo {{ .Values.jpdIntegrationName }}
+              - echo {{ .Values.jpdIntegrationName 0 }}
+              - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegrationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegrationName }}_accessToken}" --server-name psemea
               - jf -v
               - jf c s
-            #   - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegrationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegrationName }}_accessToken}" --server-name psemea
             # onExecute:
             #   - | 
             #     for i in 1 2 3; do 
