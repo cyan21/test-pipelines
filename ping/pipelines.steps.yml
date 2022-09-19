@@ -24,22 +24,22 @@ pipelines:
 #                     jf rt ping --server-id psemea
 #                     sleep 5
 #                 done
-        - name: Ping_2
-          type: utils/ping
-          configuration:
-            affinityGroup: together
-            integrations:
-            {{- range .Values.jpdIntegrationName }}
-              - name: "{{ . }}"
-            {{- end }}
-            iteration: 2
-            sleepBetweenIteration: 5
+        # - name: Ping_2
+        #   type: utils/ping
+        #   configuration:
+        #     affinityGroup: together
+        #     integrations:
+        #     {{- range .Values.jpdIntegrationName }}
+        #       - name: "{{ . }}"
+        #     {{- end }}
+        #     iteration: 2
+        #     sleepBetweenIteration: 5
         - name: Update_status_yml
           type: Bash
           configuration:
             affinityGroup: together
-            inputSteps:
-              - name: Ping_2
+            # inputSteps:
+            #   - name: Ping_2
             # integrations:
             # {{- range .Values.jpdIntegrationName }}
             #   - name: "{{ . }}"
