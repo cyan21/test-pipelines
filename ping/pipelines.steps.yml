@@ -40,10 +40,10 @@ pipelines:
             affinityGroup: together
             inputSteps:
               - name: Ping_2
-            integrations:
-            {{- range .Values.jpdIntegrationName }}
-              - name: "{{ . }}"
-            {{- end }}
+            # integrations:
+            # {{- range .Values.jpdIntegrationName }}
+            #   - name: "{{ . }}"
+            # {{- end }}
               # - name: artifactory_eu
           execution:
             onStart:
