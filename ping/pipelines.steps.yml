@@ -31,10 +31,6 @@ pipelines:
             {{- range .Values.jpdIntegrationName }}
               - name: "{{ . }}"
             {{- end }}
-            # integrationList: 
-            # {{- range .Values.jpdIntegrationName }}
-            #   - "{{ . }}"
-            # {{- end }} 
             iteration: 2
             sleepBetweenIteration: 5
         - name: Update_status_yml
@@ -46,9 +42,11 @@ pipelines:
             {{- range .Values.jpdIntegrationName }}
               - name: "{{ . }}"
             {{- end }}
+              - name: artifactory_eu
           execution:
             onStart:
               - echo {{ .Values.jpdIntegrationName }}
+              - jf -v
               - jf c s
             #   - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegrationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegrationName }}_accessToken}" --server-name psemea
             # onExecute:
