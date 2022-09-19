@@ -60,7 +60,7 @@ pipelines:
               # - name: artifactory_eu
           execution:
             onStart:
-              - echo {{ .Values.jpdIntegrationName }} 
+              - echo {{ .Values.jpdIntegrationName }} | cut -d" " -f2 | tr -d ]
               # - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegrationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegrationName }}_accessToken}" --server-name psemea
               # - jf -v
               # - jf c s
