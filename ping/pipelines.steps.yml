@@ -6,25 +6,7 @@ pipelines:
       configuration:
         jfrogCliVersion: 2
       steps:
-  #Ping instances
-#         - name: Ping
-#           type: Bash
-#           configuration:
-#             integrations:
-#               - name: {{ .Values.jpdIntegrationName }}
-#           execution:
-#             onStart:
-#               - echo {{ .Values.jpdIntegrationName }}
-#               - configure_jfrog_cli --artifactory-url "${int_{{ .Values.jpdIntegrationName }}_url}/artifactory" --access-token "${int_{{ .Values.jpdIntegrationName }}_accessToken}" --server-name psemea
-# #              - configure_jfrog_cli --artifactory-url ${int_yann_platform_token_url}/artifactory --access-token ${int_yann_platform_token_accessToken} --server-name psemea
-#             onExecute:
-#               - | 
-#                 for i in 1 2 3; do 
-#                     echo "[INFO] iteration $i ..."
-#                     jf rt ping --server-id psemea
-#                     sleep 5
-#                 done
-        - name: Ping_2
+        - name: Ping
           type: utils/ping
           configuration:
             affinityGroup: together
@@ -39,7 +21,7 @@ pipelines:
           configuration:
             affinityGroup: together
             inputSteps:
-              - name: Ping_2
+              - name: Ping
                 status:
                   - failure
                   - error
@@ -50,7 +32,7 @@ pipelines:
             {{- end }}
           execution:
             onStart:
-              - echo "Ping_2 status = ${step_Ping_2_statusName}"
+              # - echo "Ping status = ${step_Ping_statusName}"
               - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f2 | tr -d ])
               - url="int_${saas_dr}_url"
               - token="int_${saas_dr}_accessToken"
@@ -58,27 +40,27 @@ pipelines:
               - jf -v
               - jf c s
               - jf rt ping
-              - curl -L https://github.com/mikefarah/yq/releases/download/v4.27.5/yq_linux_amd64 -o yq && chmod +x yq && ./yq -V
+              - curl -L https://github.com/mikefarah/yq/releases/download/{{ .Values.yqVersion }}/yq_linux_amd64 -o yq && chmod +x yq && ./yq -V
             onExecute:
-              - exists=$(jf rt dl jfrog-automation/status.yml . | jq -r ."totals"."success")
+              - exists=$(jf rt dl {{ .Values.automationRepo }}/{{ .Values.statusFile }} . | jq -r ."totals"."success")
               - epochNow=$(date +%s)
               - canUpdateDR="false"
               - hb=""
               - |
                 if [[ $exists -eq 1 ]]; then 
-                  echo "[INFO] status.yml found"; 
+                  echo "[INFO] {{ .Values.statusFile }} found"; 
                 else 
-                  echo "[INFO] status.yml NOT found ... initializing it ...";
-                  touch status.yml
-                  ./yq -e -i ".from=\"SAAS_DR\"" status.yml
-                  ./yq -e -i ".to=\"SAAS_MAIN\"" status.yml
+                  echo "[INFO] {{ .Values.statusFile }} NOT found ... initializing it ...";
+                  touch {{ .Values.statusFile }}
+                  ./yq -e -i ".from=\"SAAS_DR\"" {{ .Values.statusFile }}
+                  ./yq -e -i ".to=\"SAAS_MAIN\"" {{ .Values.statusFile }}
                 fi
               - |
-                if [[ ${step_Ping_2_statusName} == "success" ]]; then 
-                  ./yq -e -i ".lastHeartBeatFromMain=${epochNow}" status.yml 
+                if [[ ${step_Ping_statusName} == "success" ]]; then 
+                  ./yq -e -i ".lastHeartBeatFromMain=${epochNow}" {{ .Values.statusFile }} 
                   canUpdateDR=true
                   hb=";lastHeartBeatFromMain=${epochNow}"
                 fi 
-              - ./yq -e -i ".canUpdateDR=\"${canUpdateDR}\"" status.yml 
-              - ./yq -e -i ".requestDateTime=${epochNow}" status.yml 
-              - jf rt u status.yml jfrog-automation/ --target-props "from=SAAS_DR;to=SAAS_MAIN;canUpdateDR=${canUpdateDR};requestDateTime=${epochNow}${hb}"
+              - ./yq -e -i ".canUpdateDR=\"${canUpdateDR}\"" {{ .Values.statusFile }} 
+              - ./yq -e -i ".requestDateTime=${epochNow}" {{ .Values.statusFile }}
+              - jf rt u {{ .Values.statusFile }} {{ .Values.automationRepo }}/ --target-props "from={{ .Values.from }};to={{ .Values.to }};canUpdateDR=${canUpdateDR};requestDateTime=${epochNow}${hb}"
