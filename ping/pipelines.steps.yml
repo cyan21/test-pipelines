@@ -70,15 +70,15 @@ pipelines:
                 else 
                   echo "[INFO] status.yml NOT found ... initializing it ...";
                   touch status.yml
-                  ./yq -e -i .from=SAAS_DR status.yml
-                  ./yq -e -i .to=SAAS_MAIN status.yml
+                  ./yq -e -i ".from=SAAS_DR" status.yml
+                  ./yq -e -i ".to=SAAS_MAIN" status.yml
                 fi
               - |
                 if [[ ${step_Ping_2_statusName} == "success" ]]; then 
-                  ./yq -e -i .lastHearBeatFromMain=${epochNow} status.yml 
+                  ./yq -e -i ".lastHearBeatFromMain=${epochNow}" status.yml 
                   canUpdateDR="true"
                   hb=";lastHearBeatFromMain=${epochNow}"
                 fi 
-              - ./yq -e -i .canUpdateDR=${canUpdateDR} status.yml 
-              - ./yq -e -i .requestDateTime=${epochNow} status.yml 
+              - ./yq -e -i ".canUpdateDR=${canUpdateDR}" status.yml 
+              - ./yq -e -i ".requestDateTime=${epochNow}" status.yml 
               - jf rt u status.yml jfrog-automation/ --target-props "from=SAAS_DR;to=SAAS_MAIN;canUpdateDR=${canUpdateDR};requestDateTime=${epochNow}${hb}"
