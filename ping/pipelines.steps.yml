@@ -75,9 +75,9 @@ pipelines:
                 fi
               - |
                 if [[ ${step_Ping_2_statusName} == "success" ]]; then 
-                  ./yq -e -i ".lastHearBeatFromMain=${epochNow}" status.yml 
-                  canUpdateDR="true"
-                  hb=";lastHearBeatFromMain=${epochNow}"
+                  ./yq -e -i ".lastHeartBeatFromMain=${epochNow}" status.yml 
+                  canUpdateDR=true
+                  hb=";lastHeartBeatFromMain=${epochNow}"
                 fi 
               - ./yq -e -i ".canUpdateDR=\"${canUpdateDR}\"" status.yml 
               - ./yq -e -i ".requestDateTime=${epochNow}" status.yml 
