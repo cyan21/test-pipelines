@@ -44,7 +44,7 @@ pipelines:
             onExecute:
               - exists=$(jf rt dl {{ .Values.automationRepo }}/{{ .Values.statusFile }} . | jq -r ."totals"."success")
               - epochNow=$(date +%s)
-              - canUpdateDR="false"
+              - canUpdateDR=false
               - hb=""
               - |
                 if [[ $exists -eq 1 ]]; then 
