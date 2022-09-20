@@ -50,6 +50,7 @@ pipelines:
             {{- end }}
           execution:
             onStart:
+              - echo "Ping_2 status = ${step_Ping_2_statusName}"
               - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f2 | tr -d ])
               - url="int_${saas_dr}_url"
               - token="int_${saas_dr}_accessToken"
@@ -57,8 +58,7 @@ pipelines:
               - jf -v
               - jf c s
               - jf rt ping
-              - curl -L https://github.com/mikefarah/yq/releases/download/v4.27.5/yq_darwin_amd64 -o yq && chmod +x yq && ./yq -V
+              - curl -L https://github.com/mikefarah/yq/releases/download/v4.27.5/yq_linux_amd64 -o yq && chmod +x yq && ./yq -V
             onExecute:
               - jf rt dl jfrog-automation/status.yml .
-              - echo "Ping_2 status = ${step_Ping_2_statusName}"
  
