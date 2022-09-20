@@ -24,22 +24,26 @@ pipelines:
 #                     jf rt ping --server-id psemea
 #                     sleep 5
 #                 done
-        # - name: Ping_2
-        #   type: utils/ping
-        #   configuration:
-        #     affinityGroup: together
-        #     integrations:
-        #     {{- range .Values.jpdIntegrationName }}
-        #       - name: "{{ . }}"
-        #     {{- end }}
-        #     iteration: 2
-        #     sleepBetweenIteration: 5
+        - name: Ping_2
+          type: utils/ping
+          configuration:
+            affinityGroup: together
+            integrations:
+            {{- range .Values.jpdIntegrationName }}
+              - name: "{{ . }}"
+            {{- end }}
+            iteration: 2
+            sleepBetweenIteration: 5
         - name: Update_status_yml
           type: Bash
           configuration:
             affinityGroup: together
-            # inputSteps:
-            #   - name: Ping_2
+            inputSteps:
+              - name: Ping_2
+                status:
+                  - failure
+                  - error
+                  - success
             integrations:
             {{- range .Values.jpdIntegrationName }}
               - name: "{{ . }}"
@@ -53,11 +57,8 @@ pipelines:
               - jf -v
               - jf c s
               - jf rt ping
-            # onExecute:
-            #   - | 
-            #     for i in 1 2 3; do 
-            #         echo "[INFO] iteration $i ..."
-            #         jf rt ping --server-id psemea
-            #         sleep 5
-            #     done
+              - curl -L https://github.com/mikefarah/yq/releases/download/v4.27.5/yq_darwin_amd64 -o yq && chmod +x yq && ./yq -V
+            onExecute:
+              - jf rt dl jfrog-automation/status.yml .
+              - echo "Ping_2 status : ${step_Ping_2_statusName}"
  
