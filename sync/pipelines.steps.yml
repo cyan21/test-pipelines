@@ -43,13 +43,13 @@ pipelines:
             - jf c s
             - jf rt ping
           onExecute:
-            - requestDateTime=$(jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} . | jq -r ".[].props.requestDateTime[]")
+            - requestDateTime=$(jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} | jq -r ".[].props.requestDateTime[]")
             - |
               if [[ $? -ne 0 ]]; then 
                 echo "[WARN] {{ .Values.statusFile }} NOT found or "requestDateTime" properties could NOT be found . Check if the Health Check pipeline has run on the DR side"
                 exit 1              
               fi
-            - canUpdateDR=$(jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} . | jq -r ".[].props.canUpdateDR[]")
+            - canUpdateDR=$(jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} | jq -r ".[].props.canUpdateDR[]")
             - |
               if [[ $? -ne 0 ]]; then 
                 echo "[WARN] "canUpdateDR" properties could NOT be found . Check if the Health Check pipeline has run on the DR side"
