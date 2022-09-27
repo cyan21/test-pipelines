@@ -18,6 +18,7 @@ pipelines:
           {{- range .Values.jpdIntegrationName }}
             - name: "{{ . }}"
           {{- end }}
+          cliPlugin: "repo-diff@1.0.0"
         execution:
           onExecute:
             - echo "Hello World"
