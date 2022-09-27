@@ -46,6 +46,8 @@ pipelines:
             - epochNow=$(date +%s)
             - canUpdateDR=false
             - requestDateTime=0
+            - echo $exists
+            - jq --version
             - |
               if [[ $exists -eq 1 ]]; then 
                 echo "[INFO] {{ .Values.statusFile }} found"
