@@ -2,7 +2,7 @@ myRepo:
   gitProvider: ych_github_pipe
   path: cyan21/test-pipelines
 jpdIntegrationName:
-  - yann_platform_token
+  - yannsbx_platform_access
 
 # automation config
 # Health check is running every 15 min (900 seconds)

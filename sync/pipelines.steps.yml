@@ -65,11 +65,50 @@ pipelines:
                   echo "[WARN] File {{ .Values.automationRepo }}/{{ .Values.statusFile }} : canUpdateDR=false; No sync will be pushed to the DR."
                   exit 2
               fi
-      - name: createRepositories
+      - name: createLocalRepositories
         type: Bash
         configuration:
           inputSteps:
             - name: checkOutages
+          integrations:
+          {{- range .Values.jpdIntegrationName }}
+            - name: "{{ . }}"
+          {{- end }}
+        execution:
+          onStart:
+            - jf c s
+            - jf plugin install repo-diff
+      - name: createRemoteRepositories
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: createLocalRepositories
+          integrations:
+          {{- range .Values.jpdIntegrationName }}
+            - name: "{{ . }}"
+          {{- end }}
+        execution:
+          onStart:
+            - jf c s
+            - jf plugin install repo-diff
+      - name: createVirtualRepositories
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: createRemoteRepositories
+          integrations:
+          {{- range .Values.jpdIntegrationName }}
+            - name: "{{ . }}"
+          {{- end }}
+        execution:
+          onStart:
+            - jf c s
+            - jf plugin install repo-diff
+      - name: storeDRInventory
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: createVirtualRepositories
           integrations:
           {{- range .Values.jpdIntegrationName }}
             - name: "{{ . }}"
