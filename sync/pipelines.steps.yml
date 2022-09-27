@@ -48,7 +48,7 @@ pipelines:
             - requestDateTime=0
             - |
               if [[ $exists -eq 1 ]]; then 
-                echo "[INFO] {{ .Values.statusFile }} found"; 
+                echo "[INFO] {{ .Values.statusFile }} found"
                 canUpdateDR=$(jf rt curl "/api/storage/{{ .Values.automationRepo }}/{{ .Values.statusFile }}?properties=canUpdateDR" | jq -r ".properties.canUpdateDR[]")
                 echo $canUpdateDR
                 requestDateTime=$(jf rt curl "/api/storage/{{ .Values.automationRepo }}/{{ .Values.statusFile }}?properties=requestDateTime" | jq -r ".properties.requestDateTime[]")
@@ -62,11 +62,11 @@ pipelines:
             #       echo "[ERROR] the last update on the  {{ .Values.automationRepo }}/{{ .Values.statusFile }} was more than {{ .Values.HealthCheckIntervalInSec }} seconds."
             #       exit 1
             #   fi 
-            - |
-              if [[ $canUpdateDR -eq "false" ]] ; then
-                  echo "[WARN] File {{ .Values.automationRepo }}/{{ .Values.statusFile }} : canUpdateDR=false; No sync will be pushed to the DR."
-                  exit 2
-              fi
+            # - |
+            #   if [[ $canUpdateDR -eq "false" ]] ; then
+            #       echo "[WARN] File {{ .Values.automationRepo }}/{{ .Values.statusFile }} : canUpdateDR=false; No sync will be pushed to the DR."
+            #       exit 2
+            #   fi
       - name: createLocalRepositories
         type: Bash
         configuration:
