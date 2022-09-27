@@ -10,3 +10,6 @@ jpdIntegrationName:
 HealthCheckIntervalInSec: 900
 automationRepo: jfrog-automation
 statusFile: status.yml
+cliPlugin:
+  name: repo-diff
+  version: 1.0.0
