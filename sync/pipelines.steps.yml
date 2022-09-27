@@ -34,7 +34,8 @@ pipelines:
           onStart:
             # - echo "Ping status = ${step_Ping_statusName}"
             - echo {{ .Values.jpdIntegrationName }}
-            - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f1 | tr -d ])
+            # - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f2 | tr -d ])
+            - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f1)
             - url="int_${saas_dr}_url"
             - token="int_${saas_dr}_accessToken"
             - configure_jfrog_cli --artifactory-url "${!url}/artifactory" --access-token "${!token}" --server-name saas_dr
@@ -42,23 +43,21 @@ pipelines:
             - jf c s
             - jf rt ping
           onExecute:
-            - exists=$(jf rt dl {{ .Values.automationRepo }}/{{ .Values.statusFile }} . | jq -r ."totals"."success")
-            - epochNow=$(date +%s)
-            - canUpdateDR=false
-            - requestDateTime=0
-            - echo $exists
-            - jq --version
+            - requestDateTime=$(jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} . | jq -r ".[].props.requestDateTime[]"
             - |
-              if [[ $exists -eq 1 ]]; then 
-                echo "[INFO] {{ .Values.statusFile }} found"
-                canUpdateDR=$(jf rt curl "/api/storage/{{ .Values.automationRepo }}/{{ .Values.statusFile }}?properties=canUpdateDR" | jq -r ".properties.canUpdateDR[]")
-                echo $canUpdateDR
-                requestDateTime=$(jf rt curl "/api/storage/{{ .Values.automationRepo }}/{{ .Values.statusFile }}?properties=requestDateTime" | jq -r ".properties.requestDateTime[]")
-                echo $requestDateTime
-              else 
-                echo "[WARN] {{ .Values.statusFile }} NOT found. Check if the Health Check pipeline has run on the DR side"
-                exit 1
+              if [[ $? -ne 0 ]]; then 
+                echo "[WARN] {{ .Values.statusFile }} NOT found or "requestDateTime" properties could NOT be found . Check if the Health Check pipeline has run on the DR side"
+                exit 1              
               fi
+            - canUpdateDR=$(jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} . | jq -r ".[].props.canUpdateDR[]"
+            - |
+              if [[ $? -ne 0 ]]; then 
+                echo "[WARN] "canUpdateDR" properties could NOT be found . Check if the Health Check pipeline has run on the DR side"
+                exit 1              
+              fi            
+            - epochNow=$(date +%s)
+            - echo $canUpdateDR
+            - echo $requestDateTime
             # - |
             #   if [[ $epochNow - $requestDateTime > {{ .Values.HealthCheckIntervalInSec }} ]] ; then 
             #       echo "[ERROR] the last update on the  {{ .Values.automationRepo }}/{{ .Values.statusFile }} was more than {{ .Values.HealthCheckIntervalInSec }} seconds."

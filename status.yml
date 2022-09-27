@@ -1,0 +1,6 @@
+from: SAAS_DR
+to: SAAS_MAIN
+lastHearBeatFromMain: 1663708156
+canUpdateDR: "true"
+requestDateTime: 1663709955
+lastHeartBeatFromMain: 1663709955
