@@ -68,6 +68,7 @@ pipelines:
       - name: createLocalRepositories
         type: Bash
         configuration:
+          affinityGroup: together
           inputSteps:
             - name: checkOutages
           integrations:
@@ -81,6 +82,7 @@ pipelines:
       - name: createRemoteRepositories
         type: Bash
         configuration:
+          affinityGroup: together
           inputSteps:
             - name: createLocalRepositories
           integrations:
@@ -94,6 +96,7 @@ pipelines:
       - name: createVirtualRepositories
         type: Bash
         configuration:
+          affinityGroup: together
           inputSteps:
             - name: createRemoteRepositories
           integrations:
@@ -107,6 +110,7 @@ pipelines:
       - name: storeDRInventory
         type: Bash
         configuration:
+          affinityGroup: together
           inputSteps:
             - name: createVirtualRepositories
           integrations:
