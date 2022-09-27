@@ -2,7 +2,7 @@ template: true   # required for local templates.
 valuesFilePath: ./values.yml
 
 resources:
-  - name: syncDR
+  - name: sync_code_repo
     type: GitRepo
     configuration:
       # SCM integration where the repository is located
@@ -13,7 +13,7 @@ resources:
         # Specifies which branches will trigger dependent steps
         include: master
 
-  - name: cron_trigger
+  - name: sync_cron
     type: CronTrigger
     configuration:
       interval: '0 0 * * *'     # Once a day
