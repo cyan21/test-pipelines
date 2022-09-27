@@ -7,7 +7,7 @@ pipelines:
       jfrogCliVersion: 2
       environmentVariables: 
         readOnly:
-          JFROG_CLI_PLUGINS_SERVER=default
+          JFROG_CLI_PLUGINS_SERVER: default
         # JFROG_CLI_PLUGINS_REPO=
     steps:
       - name: Ping
