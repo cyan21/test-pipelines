@@ -100,6 +100,7 @@ pipelines:
           {{- range .Values.jpdIntegrationName }}
             - name: "{{ . }}"
           {{- end }}
+        execution:
           onStart:
             - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f1 | tr -d [)
             - url="int_${saas_dr}_url"
