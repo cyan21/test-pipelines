@@ -67,7 +67,7 @@ pipelines:
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v 
-      - name: createRemoteRepositories
+      - name: createRemoteRepositoriesV2
         type: utils/bashV2
         configuration:
           affinityGroup: together
