@@ -73,9 +73,7 @@ pipelines:
           inputSteps:
             - name: checkOutages
           integrations:
-          {{- range .Values.jpdIntegrationName }}
-            - name: "{{ . }}"
-          {{- end }}
+            - name: "{{ .Values.jpdIntegrationName  }}"
         execution:
           onStart:
             - jf c s
@@ -87,9 +85,7 @@ pipelines:
           inputSteps:
             - name: createLocalRepositories
           integrations:
-          {{- range .Values.jpdIntegrationName }}
-            - name: "{{ . }}"
-          {{- end }}
+            - name: "{{ .Values.jpdIntegrationName  }}"
         execution:
           onStart:
             - jf c s
@@ -101,9 +97,7 @@ pipelines:
           inputSteps:
             - name: createRemoteRepositories
           integrations:
-          {{- range .Values.jpdIntegrationName }}
-            - name: "{{ . }}"
-          {{- end }}
+            - name: "{{ .Values.jpdIntegrationName  }}"
         execution:
           onStart:
             - jf c s
@@ -115,9 +109,7 @@ pipelines:
           inputSteps:
             - name: createVirtualRepositories
           integrations:
-          {{- range .Values.jpdIntegrationName }}
-            - name: "{{ . }}"
-          {{- end }}
+            - name: "{{ .Values.jpdIntegrationName  }}"
         execution:
           onStart:
             - jf c s
