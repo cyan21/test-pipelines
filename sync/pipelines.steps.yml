@@ -10,52 +10,50 @@ pipelines:
           JFROG_CLI_PLUGINS_SERVER: jpd
           JFROG_CLI_PLUGINS_REPO: jfrog-automation
     steps:
-      - name: testBashV2
-        type: utils/bashV2
-        configuration:
-          affinityGroup: together
-          integrations:
-          {{- range .Values.jpdIntegrationName }}
-            - name: "{{ . }}"
-          {{- end }}
-          cliPlugin: "repo-diff@1.0.0"
-        execution:
-          onExecute:
-            - echo "Hello World"
+      # - name: testBashV2
+      #   type: utils/bashV2
+      #   configuration:
+      #     affinityGroup: together
+      #     integrations:
+      #     {{- range .Values.jpdIntegrationName }}
+      #       - name: "{{ . }}"
+      #     {{- end }}
+      #     cliPlugin: "repo-diff@1.0.0"
+      #   execution:
+      #     onExecute:
+      #       - echo "Hello World"
       - name: Ping
         type: utils/ping
         configuration:
           affinityGroup: together
-          inputSteps:
-            - name: testBashV2
+          # inputSteps:
+          #   - name: testBashV2
           integrations:
           {{- range .Values.jpdIntegrationName }}
             - name: "{{ . }}"
           {{- end }}
           iteration: 2
           sleepBetweenIteration: 5
-      - name: checkOutages
-        type: Bash
+      - name: checkOutagesV2
+        type: utils/bashV2
         configuration:
           affinityGroup: together
           inputSteps:
             - name: Ping
           integrations:
-          {{- range .Values.jpdIntegrationName }}
-            - name: "{{ . }}"
-          {{- end }}
+            - name: {{ .Values.jpdDr }}
         execution:
-          onStart:
-            # - echo "Ping status = ${step_Ping_statusName}"
-            - echo {{ .Values.jpdIntegrationName }}
-            # - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f2 | tr -d ])
-            - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f1 | tr -d [)
-            - url="int_${saas_dr}_url"
-            - token="int_${saas_dr}_accessToken"
-            - configure_jfrog_cli --artifactory-url "${!url}/artifactory" --access-token "${!token}" --server-name saas_dr
-            - jf -v
-            - jf c s
-            - jf rt ping
+          # onStart:
+          #   # - echo "Ping status = ${step_Ping_statusName}"
+          #   - echo {{ .Values.jpdIntegrationName }}
+          #   # - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f2 | tr -d ])
+          #   - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f1 | tr -d [)
+          #   - url="int_${saas_dr}_url"
+          #   - token="int_${saas_dr}_accessToken"
+          #   - configure_jfrog_cli --artifactory-url "${!url}/artifactory" --access-token "${!token}" --server-name saas_dr
+          #   - jf -v
+          #   - jf c s
+          #   - jf rt ping
           onExecute:
             - requestDateTime=$(jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} | jq -r ".[].props.requestDateTime[]")
             - |
@@ -82,28 +80,27 @@ pipelines:
             #       echo "[WARN] File {{ .Values.automationRepo }}/{{ .Values.statusFile }} : canUpdateDR=false; No sync will be pushed to the DR."
             #       exit 2
             #   fi
-      - name: createLocalRepositories
-        type: Bash
+      - name: createLocalRepositoriesV2
+        type: utils/bashV2
         configuration:
           environmentVariables:
             JFROG_CLI_LOG_LEVEL: DEBUG
           affinityGroup: together
           inputSteps:
-            - name: checkOutages
+            - name: checkOutagesV2
           integrations:
-          {{- range .Values.jpdIntegrationName }}
-            - name: "{{ . }}"
-          {{- end }}
+            - name: {{ .Values.jpdDr }}
+          cliPlugin: "{{ .Values.cliPlugin.name }}@{{ .Values.cliPlugin.version }}"
         execution:
-          onStart:
-            - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f1 | tr -d [)
-            - url="int_${saas_dr}_url"
-            - token="int_${saas_dr}_accessToken"
-            - configure_jfrog_cli --artifactory-url "${!url}/artifactory" --access-token "${!token}" --server-name jpd
-            - jf -v
-            - jf c s
-            - jf rt ping
-            - jf plugin install {{ .Values.cliPlugin.name }}@{{ .Values.cliPlugin.version }}
+          # onStart:
+          #   - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f1 | tr -d [)
+          #   - url="int_${saas_dr}_url"
+          #   - token="int_${saas_dr}_accessToken"
+          #   - configure_jfrog_cli --artifactory-url "${!url}/artifactory" --access-token "${!token}" --server-name jpd
+          #   - jf -v
+          #   - jf c s
+          #   - jf rt ping
+          #   - jf plugin install {{ .Values.cliPlugin.name }}@{{ .Values.cliPlugin.version }}
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v 
       - name: createRemoteRepositories

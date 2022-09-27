@@ -4,6 +4,7 @@ myRepo:
 jpdIntegrationName:
   - yannsbx_platform_access
   - yann_platform_token
+jpdDr: yannsbx_platform_access
 
 # automation config
 # Health check is running every 15 min (900 seconds)
