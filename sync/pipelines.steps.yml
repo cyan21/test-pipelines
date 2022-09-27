@@ -108,7 +108,7 @@ pipelines:
         configuration:
           affinityGroup: together
           inputSteps:
-            - name: createLocalRepositories
+            - name: createLocalRepositoriesV2
           integrations:
           {{- range .Values.jpdIntegrationName }}
             - name: "{{ . }}"
