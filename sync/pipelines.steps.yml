@@ -1,0 +1,79 @@
+template: true   # required for local templates.
+valuesFilePath: ./values.yml
+
+pipelines:
+  - name: HealthCheck
+    configuration:
+      jfrogCliVersion: 2
+      environmentVariables: 
+        - JFROG_CLI_PLUGINS_SERVER=default
+        # - JFROG_CLI_PLUGINS_REPO=
+    steps:
+      - name: Ping
+        type: utils/ping
+        configuration:
+          affinityGroup: together
+          integrations:
+          {{- range .Values.jpdIntegrationName }}
+            - name: "{{ . }}"
+          {{- end }}
+          iteration: 2
+          sleepBetweenIteration: 5
+      - name: checkOutages
+        type: Bash
+        configuration:
+          affinityGroup: together
+          inputSteps:
+            - name: Ping
+          integrations:
+          {{- range .Values.jpdIntegrationName }}
+            - name: "{{ . }}"
+          {{- end }}
+        execution:
+          onStart:
+            # - echo "Ping status = ${step_Ping_statusName}"
+            - saas_dr=$(echo {{ .Values.jpdIntegrationName }} | cut -d" " -f2 | tr -d ])
+            - url="int_${saas_dr}_url"
+            - token="int_${saas_dr}_accessToken"
+            - configure_jfrog_cli --artifactory-url "${!url}/artifactory" --access-token "${!token}" --server-name saas_dr
+            - jf -v
+            - jf c s
+            - jf rt ping
+            - curl -L https://github.com/mikefarah/yq/releases/download/{{ .Values.yqVersion }}/yq_linux_amd64 -o yq && chmod +x yq && ./yq -V
+          onExecute:
+            - exists=$(jf rt dl {{ .Values.automationRepo }}/{{ .Values.statusFile }} . | jq -r ."totals"."success")
+            - epochNow=$(date +%s)
+            - canUpdateDR=false
+            - requestDateTime=0
+            - |
+              if [[ $exists -eq 1 ]]; then 
+                echo "[INFO] {{ .Values.statusFile }} found"; 
+                canUpdateDR=$(jf rt curl "/api/storage/{{ .Values.automationRepo }}/{{ .Values.statusFile }}?properties=canUpdateDR" | jq -r ".properties.canUpdateDR[]")
+                requestDateTime=$(jf rt curl "/api/storage/{{ .Values.automationRepo }}/{{ .Values.statusFile }}?properties=requestDateTime" | jq -r ".properties.requestDateTime[]")
+              else 
+                echo "[WARN] {{ .Values.statusFile }} NOT found. Check if the Health Check pipeline has run on the DR side"
+                exit 1
+              fi
+            - |
+              if [[ $epochNow - $requestDateTime > {{ .Values.HealthCheckIntervalInSec }} ]] ; then 
+                  echo "[ERROR] the last update on the  {{ .Values.automationRepo }}/{{ .Values.statusFile }} was more than {{ .Values.HealthCheckIntervalInSec }} seconds."
+                  exit 1
+              fi 
+            - |
+              if [[ $canUpdateDR -eq "false" ]] ; then
+                  echo "[WARN] File {{ .Values.automationRepo }}/{{ .Values.statusFile }} : canUpdateDR=false; No sync will be pushed to the DR."
+                  exit 2
+              fi
+      - name: createRepositories
+        type: Bash
+        configuration:
+          inputSteps:
+            - name: checkOutages
+          integrations:
+          {{- range .Values.jpdIntegrationName }}
+            - name: "{{ . }}"
+          {{- end }}
+        execution:
+          onStart:
+            - jf c s
+            - jf plugin install repo-diff
