@@ -19,7 +19,7 @@ pipelines:
             - name: "{{ . }}"
           {{- end }}
         execution:
-          onStart:
+          onExecute:
             - echo "Hello World"
       - name: Ping
         type: utils/ping
