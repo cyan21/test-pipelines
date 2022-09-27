@@ -10,10 +10,23 @@ pipelines:
           JFROG_CLI_PLUGINS_SERVER: jpd
           JFROG_CLI_PLUGINS_REPO: jfrog-automation
     steps:
+      - name: testBashV2
+        type: utils/bashV2
+        configuration:
+          affinityGroup: together
+          integrations:
+          {{- range .Values.jpdIntegrationName }}
+            - name: "{{ . }}"
+          {{- end }}
+        execution:
+          onExecute:
+            - echo "Hello World"
       - name: Ping
         type: utils/ping
         configuration:
           affinityGroup: together
+          inputSteps:
+            - name: testBashV2
           integrations:
           {{- range .Values.jpdIntegrationName }}
             - name: "{{ . }}"
