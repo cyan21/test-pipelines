@@ -45,16 +45,16 @@ pipelines:
             - epochNow=$(date +%s)
             - echo $canUpdateDR
             - echo $requestDateTime
-            # - |
-            #   if [[ $epochNow - $requestDateTime > {{ .Values.HealthCheckIntervalInSec }} ]] ; then 
-            #       echo "[ERROR] the last update on the  {{ .Values.automationRepo }}/{{ .Values.statusFile }} was more than {{ .Values.HealthCheckIntervalInSec }} seconds."
-            #       exit 1
-            #   fi 
-            # - |
-            #   if [[ $canUpdateDR -eq "false" ]] ; then
-            #       echo "[WARN] File {{ .Values.automationRepo }}/{{ .Values.statusFile }} : canUpdateDR=false; No sync will be pushed to the DR."
-            #       exit 2
-            #   fi
+            - |
+              if [[ $epochNow - $requestDateTime > {{ .Values.HealthCheckIntervalInSec }} ]] ; then 
+                  echo "[ERROR] the last update on the  {{ .Values.automationRepo }}/{{ .Values.statusFile }} was more than {{ .Values.HealthCheckIntervalInSec }} seconds."
+                  exit 1
+              fi 
+            - |
+              if [[ $canUpdateDR -eq "false" ]] ; then
+                  echo "[WARN] File {{ .Values.automationRepo }}/{{ .Values.statusFile }} : canUpdateDR=false; No sync will be pushed to the DR."
+                  exit 2
+              fi
       - name: createLocalRepositoriesV2
         type: utils/bashV2
         configuration:
