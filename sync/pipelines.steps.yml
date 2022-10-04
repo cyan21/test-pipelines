@@ -135,7 +135,7 @@ pipelines:
             - mkdir saas_dr && mv inventory*.yaml saas_dr/
             - jf rt u saas_dr/* $JFROG_CLI_PLUGINS_REPO/
             - rm -rf saas_dr
-      - name: deleteLocalRepositories
+      - name: deleteRemoteRepositories
         type: utils/bashV2
         configuration:
           affinityGroup: together
