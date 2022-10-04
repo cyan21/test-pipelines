@@ -49,9 +49,10 @@ pipelines:
               fi            
             - epochNow=$(date +%s)
             - echo $canUpdateDR
+            - interval=$epochNow-$requestDateTime
             - echo $requestDateTime
             - |
-              if [[ $epochNow - $requestDateTime > {{ .Values.HealthCheckIntervalInSec }} ]] ; then 
+              if [[ $interval > {{ .Values.HealthCheckIntervalInSec }} ]] ; then 
                   echo "[ERROR] the last update on the  {{ .Values.automationRepo }}/{{ .Values.statusFile }} was more than {{ .Values.HealthCheckIntervalInSec }} seconds."
                   exit 1
               fi 
