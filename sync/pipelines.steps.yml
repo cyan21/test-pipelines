@@ -34,6 +34,8 @@ pipelines:
         execution:
           onExecute:
             - requestDateTime=$(jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} | jq -r ".[].props.requestDateTime[]")
+            - jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} |  jq -r ".[].props.requestDateTime[]"
+            - echo "request Datetime : $requestDateTime"
             - |
               if [[ $requestDateTime -eq "" ]]; then 
                 echo "[WARN] {{ .Values.statusFile }} NOT found or "requestDateTime" properties could NOT be found . Check if the Health Check pipeline has run on the DR side"
