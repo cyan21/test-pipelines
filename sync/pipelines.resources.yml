@@ -16,5 +16,6 @@ resources:
   - name: sync_cron
     type: CronTrigger
     configuration:
-      interval: '* */2 * * *'     # every 2 hours
+      # interval: '* */2 * * *'     # every 2 hours
+      interval: '0 0 * * *'     # once a day
 
