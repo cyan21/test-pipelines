@@ -148,25 +148,6 @@ pipelines:
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v
-            - jf {{ .Values.cliPlugin.name }} delete local {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=false --inventory=true
-          onSuccess:
-            - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l       
-            - mkdir saas_dr && mv inventory*.yaml saas_dr/
-            - jf rt u saas_dr/* $JFROG_CLI_PLUGINS_REPO/
-            - rm -rf saas_dr
-      - name: deleteRemoteRepositories
-        type: utils/bashV2
-        configuration:
-          affinityGroup: together
-          inputSteps:
-            - name: createVirtualRepositoriesV2
-          integrations:
-            - name: {{ .Values.jpdMain }}
-            - name: {{ .Values.jpdDr }}
-          cliPlugin: "{{ .Values.cliPlugin.name }}@{{ .Values.cliPlugin.version }}"
-        execution:
-          onExecute:
-            - jf {{ .Values.cliPlugin.name }} -v
             - jf {{ .Values.cliPlugin.name }} delete remote {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=false --inventory=true
           onSuccess:
             - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l       
