@@ -126,7 +126,7 @@ pipelines:
             - name: {{ .Values.jpdMain }}
         execution:
           onExecute:
-            - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH 
+            - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l
             - mkdir saas_dr && mv inventory*.yaml saas_dr/
             - jf rt u saas_dr/* $JFROG_CLI_PLUGINS_REPO/
             - rm -rf saas_dr
