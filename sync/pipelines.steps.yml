@@ -9,7 +9,7 @@ pipelines:
         readOnly:
           JFROG_CLI_PLUGINS_SERVER: {{ .Values.jpdMain }}
           JFROG_CLI_PLUGINS_REPO: jfrog-automation
-          JF_PLUGIN_REPOSYNC_INVENTORY_PATH: /tmp/
+          JF_PLUGIN_REPOSYNC_INVENTORY_PATH: /tmp
     steps:
       - name: Ping
         type: utils/ping
@@ -114,7 +114,7 @@ pipelines:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v
             - jf {{ .Values.cliPlugin.name }} create virtual {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
-            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-virtual.yaml
+            - ls -l $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-virtual.yaml
             - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-virtual.yaml  
       - name: storeDRInventoryV2
         type: utils/bashV2
