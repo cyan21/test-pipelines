@@ -7,7 +7,7 @@ pipelines:
       jfrogCliVersion: 2
       environmentVariables: 
         readOnly:
-          JFROG_CLI_PLUGINS_SERVER: jpd
+          JFROG_CLI_PLUGINS_SERVER: {{ .Values.jpdMain }}
           JFROG_CLI_PLUGINS_REPO: jfrog-automation
           JF_PLUGIN_REPOSYNC_INVENTORY_PATH: /tmp/
     steps:
@@ -81,8 +81,8 @@ pipelines:
             - jf {{ .Values.cliPlugin.name }} -v 
             - jf {{ .Values.cliPlugin.name }} --help
             - jf {{ .Values.cliPlugin.name }} create local {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
-            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-local.yaml
-            - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-local.yaml
+            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-local.yaml
+            - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-local.yaml
       - name: createRemoteRepositoriesV2
         type: utils/bashV2
         configuration:
@@ -97,8 +97,8 @@ pipelines:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v 
             - jf {{ .Values.cliPlugin.name }} create remote {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
-            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-remote.yaml
-            - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-remote.yaml 
+            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-remote.yaml
+            - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-remote.yaml 
       - name: createVirtualRepositoriesV2
         type: utils/bashV2
         configuration:
@@ -114,8 +114,8 @@ pipelines:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v
             - jf {{ .Values.cliPlugin.name }} create virtual {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
-            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-virtual.yaml
-            - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-virtual.yaml  
+            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-virtual.yaml
+            - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-virtual.yaml  
       - name: storeDRInventoryV2
         type: utils/bashV2
         configuration:
@@ -129,4 +129,4 @@ pipelines:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v
             - ls - l && cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH 
-            - jf rt u jpd2/* $JFROG_CLI_PLUGINS_REPO/
+            - jf rt u {{ .Values.jpdDr }}/* $JFROG_CLI_PLUGINS_REPO/
