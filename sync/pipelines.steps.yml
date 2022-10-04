@@ -9,15 +9,18 @@ pipelines:
         readOnly:
           JFROG_CLI_PLUGINS_SERVER: jpd
           JFROG_CLI_PLUGINS_REPO: jfrog-automation
+          JF_PLUGIN_REPOSYNC_INVENTORY_PATH: /tmp/
     steps:
       - name: Ping
         type: utils/ping
         configuration:
           affinityGroup: together
           integrations:
-          {{- range .Values.jpdIntegrationName }}
-            - name: "{{ . }}"
-          {{- end }}
+          # {{- range .Values.jpdIntegrationName }}
+          #   - name: "{{ . }}"
+          # {{- end }}
+            - name: {{ .Values.jpdMain }}
+            - name: {{ .Values.jpdDr }}
           iteration: 2
           sleepBetweenIteration: 5
       - name: checkOutagesV2
@@ -62,11 +65,15 @@ pipelines:
           inputSteps:
             - name: checkOutagesV2
           integrations:
+            - name: {{ .Values.jpdMain }}
             - name: {{ .Values.jpdDr }}
           cliPlugin: "{{ .Values.cliPlugin.name }}@{{ .Values.cliPlugin.version }}"
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v 
+            - jf {{ .Values.cliPlugin.name }} create local jpd_1 jpd_2 --dry-run=true --inventory=true
+            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-local.yaml
+            - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-local.yaml
       - name: createRemoteRepositoriesV2
         type: utils/bashV2
         configuration:
@@ -74,23 +81,32 @@ pipelines:
           inputSteps:
             - name: createLocalRepositoriesV2
           integrations:
+            - name: {{ .Values.jpdMain }}
             - name: {{ .Values.jpdDr }}
           cliPlugin: "{{ .Values.cliPlugin.name }}@{{ .Values.cliPlugin.version }}"
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v 
+            - jf {{ .Values.cliPlugin.name }} create remote jpd_1 jpd_2 --dry-run=true --inventory=true
+            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-remote.yaml
+            - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-remote.yaml 
       - name: createVirtualRepositoriesV2
         type: utils/bashV2
         configuration:
           affinityGroup: together
           inputSteps:
+            - name: createLocalRepositoriesV2
             - name: createRemoteRepositoriesV2
           integrations:
+            - name: {{ .Values.jpdMain }}
             - name: {{ .Values.jpdDr }}
           cliPlugin: "{{ .Values.cliPlugin.name }}@{{ .Values.cliPlugin.version }}"     
         execution:
           onExecute:
-            - jf {{ .Values.cliPlugin.name }} -v 
+            - jf {{ .Values.cliPlugin.name }} -v
+            - jf {{ .Values.cliPlugin.name }} create virtual jpd_1 jpd_2 --dry-run=true --inventory=true
+            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-virtual.yaml
+            - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-virtual.yaml  
       - name: storeDRInventoryV2
         type: utils/bashV2
         configuration:
@@ -98,8 +114,10 @@ pipelines:
           inputSteps:
             - name: createVirtualRepositoriesV2
           integrations:
-            - name: {{ .Values.jpdDr }}
+            - name: {{ .Values.jpdMain }}
           cliPlugin: "{{ .Values.cliPlugin.name }}@{{ .Values.cliPlugin.version }}"
         execution:
           onExecute:
-            - jf {{ .Values.cliPlugin.name }} -v 
+            - jf {{ .Values.cliPlugin.name }} -v
+            - ls - l && cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH 
+            - jf rt u jpd2/* $JFROG_CLI_PLUGINS_REPO/
