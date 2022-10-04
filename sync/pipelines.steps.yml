@@ -80,8 +80,8 @@ pipelines:
             - jf c s
             - jf {{ .Values.cliPlugin.name }} -v 
             - jf {{ .Values.cliPlugin.name }} --help
-            - jf {{ .Values.cliPlugin.name }} create local {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
-            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-local.yaml
+            - jf {{ .Values.cliPlugin.name }} create local {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=false --inventory=true
+            - ls -l  $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-local.yaml
             - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-local.yaml
       - name: createRemoteRepositoriesV2
         type: utils/bashV2
@@ -96,8 +96,8 @@ pipelines:
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v 
-            - jf {{ .Values.cliPlugin.name }} create remote {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
-            - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-remote.yaml
+            - jf {{ .Values.cliPlugin.name }} create remote {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=false --inventory=true
+            - ls -l  $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-remote.yaml
             - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-remote.yaml 
       - name: createVirtualRepositoriesV2
         type: utils/bashV2
@@ -113,7 +113,7 @@ pipelines:
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v
-            - jf {{ .Values.cliPlugin.name }} create virtual {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
+            - jf {{ .Values.cliPlugin.name }} create virtual {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=false --inventory=true
             - ls -l $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-virtual.yaml
             - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/{{ .Values.jpdDr }}/inventory-virtual.yaml  
       - name: storeDRInventoryV2
