@@ -49,7 +49,7 @@ pipelines:
               fi            
             - epochNow=$(date +%s)
             - echo $canUpdateDR
-            - interval=$epochNow-$requestDateTime
+            - interval=$(expr $epochNow - $requestDateTime)
             - echo $epochNow
             - echo $requestDateTime
             - echo $interval
@@ -59,7 +59,7 @@ pipelines:
                   exit 1
               fi 
             - |
-              if [[ $canUpdateDR -eq "false" ]] ; then
+              if [[ $canUpdateDR == "false" ]] ; then
                   echo "[WARN] File {{ .Values.automationRepo }}/{{ .Values.statusFile }} : canUpdateDR=false; No sync will be pushed to the DR."
                   exit 2
               fi
