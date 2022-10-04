@@ -80,7 +80,7 @@ pipelines:
             - jf c s
             - jf {{ .Values.cliPlugin.name }} -v 
             - jf {{ .Values.cliPlugin.name }} --help
-            - jf {{ .Values.cliPlugin.name }} create local jpd_1 jpd_2 --dry-run=true --inventory=true
+            - jf {{ .Values.cliPlugin.name }} create local {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
             - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-local.yaml
             - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-local.yaml
       - name: createRemoteRepositoriesV2
@@ -96,7 +96,7 @@ pipelines:
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v 
-            - jf {{ .Values.cliPlugin.name }} create remote jpd_1 jpd_2 --dry-run=true --inventory=true
+            - jf {{ .Values.cliPlugin.name }} create remote {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
             - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-remote.yaml
             - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-remote.yaml 
       - name: createVirtualRepositoriesV2
@@ -113,7 +113,7 @@ pipelines:
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v
-            - jf {{ .Values.cliPlugin.name }} create virtual jpd_1 jpd_2 --dry-run=true --inventory=true
+            - jf {{ .Values.cliPlugin.name }} create virtual {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
             - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-virtual.yaml
             - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-virtual.yaml  
       - name: storeDRInventoryV2
