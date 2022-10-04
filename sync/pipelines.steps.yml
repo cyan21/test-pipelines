@@ -54,7 +54,7 @@ pipelines:
             - echo $requestDateTime
             - echo $interval
             - |
-              if [[ $interval > {{ .Values.HealthCheckIntervalInSec }} ]] ; then 
+              if [[ $interval -gt {{ .Values.HealthCheckIntervalInSec }} ]] ; then 
                   echo "[ERROR] the last update on the  {{ .Values.automationRepo }}/{{ .Values.statusFile }} was more than {{ .Values.HealthCheckIntervalInSec }} seconds."
                   exit 1
               fi 
