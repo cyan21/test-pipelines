@@ -13,8 +13,8 @@ resources:
         # Specifies which branches will trigger dependent steps
         include: master
 
-  - name: cron_trigger
+  - name: myCron_trigger
     type: CronTrigger
     configuration:
-      interval: '0 0 * * *'     # Once a day
+      interval: '*/15 * * * *'     # every 15 min
 

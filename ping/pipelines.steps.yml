@@ -9,6 +9,8 @@ pipelines:
         - name: Ping
           type: utils/ping
           configuration:
+            inputResources:
+              - name: myCron_trigger
             affinityGroup: together
             integrations:
             {{- range .Values.jpdIntegrationName }}
