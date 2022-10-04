@@ -35,7 +35,7 @@ pipelines:
           onExecute:
             - requestDateTime=$(jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} | jq -r ".[].props.requestDateTime[]")
             - jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} |  jq -r ".[].props.requestDateTime[]"
-            - echo "request Datetime : "  $requestDateTime
+            - echo "request datetime :" $requestDateTime
             - |
               if [[ $requestDateTime -eq "" ]]; then 
                 echo "[WARN] {{ .Values.statusFile }} NOT found or "requestDateTime" properties could NOT be found . Check if the Health Check pipeline has run on the DR side"
@@ -44,7 +44,7 @@ pipelines:
             - canUpdateDR=$(jf rt s {{ .Values.automationRepo }}/{{ .Values.statusFile }} | jq -r ".[].props.canUpdateDR[]")
             - |
               if [[ $? -eq "" ]]; then 
-                echo "[WARN] "canUpdateDR" properties could NOT be found . Check if the Health Check pipeline has run on the DR side"
+                echo "[WARN] \"canUpdateDR\" properties could NOT be found . Check if the Health Check pipeline has run on the DR side"
                 exit 1              
               fi            
             - epochNow=$(date +%s)
