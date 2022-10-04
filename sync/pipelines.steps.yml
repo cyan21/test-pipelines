@@ -75,7 +75,9 @@ pipelines:
           cliPlugin: "{{ .Values.cliPlugin.name }}@{{ .Values.cliPlugin.version }}"
         execution:
           onExecute:
+            - jf c s
             - jf {{ .Values.cliPlugin.name }} -v 
+            - jf {{ .Values.cliPlugin.name }} --help
             - jf {{ .Values.cliPlugin.name }} create local jpd_1 jpd_2 --dry-run=true --inventory=true
             - echo $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-local.yaml
             - cat $JF_PLUGIN_REPOSYNC_INVENTORY_PATH/jpd2/inventory-local.yaml
