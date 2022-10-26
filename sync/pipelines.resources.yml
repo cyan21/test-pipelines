@@ -17,5 +17,5 @@ resources:
     type: CronTrigger
     configuration:
       # interval: '* */2 * * *'     # every 2 hours
-      interval: '0 0 * * *'     # once a day
-
+      # interval: '0 0 * * *'     # once a day
+      interval: '*/6 * * * *'     # every 6 min
