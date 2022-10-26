@@ -129,7 +129,7 @@ pipelines:
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v
-            - jf {{ .Values.cliPlugin.name }} delete local {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=false --inventory=true
+            - jf {{ .Values.cliPlugin.name }} delete local {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
           onSuccess:
             - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l       
             - mkdir saas_dr && mv inventory*.yaml saas_dr/
@@ -148,7 +148,7 @@ pipelines:
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v
-            - jf {{ .Values.cliPlugin.name }} delete remote {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=false --inventory=true
+            - jf {{ .Values.cliPlugin.name }} delete remote {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
           onSuccess:
             - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l       
             - mkdir saas_dr && mv inventory*.yaml saas_dr/
@@ -168,7 +168,7 @@ pipelines:
         execution:
           onExecute:
             - jf {{ .Values.cliPlugin.name }} -v
-            - jf {{ .Values.cliPlugin.name }} delete virtual {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=false --inventory=true
+            - jf {{ .Values.cliPlugin.name }} delete virtual {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run=true --inventory=true
           onSuccess:
             - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l       
             - mkdir saas_dr && mv inventory*.yaml saas_dr/
