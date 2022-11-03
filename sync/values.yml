@@ -17,5 +17,5 @@ cliPlugin:
   version: 0.1.0
 
 dryRunMode:
-  create: true
-  delete: true
+  create: false
+  delete: false

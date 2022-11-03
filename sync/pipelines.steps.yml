@@ -131,10 +131,11 @@ pipelines:
             - jf {{ .Values.cliPlugin.name }} -v
             - jf {{ .Values.cliPlugin.name }} delete local {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run={{ .Values.dryRunMode.delete }} --inventory=true
           onSuccess:
-            - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l       
-            - mkdir saas_dr && mv inventory*.yaml saas_dr/
-            - jf rt u saas_dr/* $JFROG_CLI_PLUGINS_REPO/
-            - rm -rf saas_dr
+            - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l 
+            - ls -l {{ .Values.jpdDr }}    
+            - mkdir -p {{ .Values.jpdDr }} && mv inventory*.yaml {{ .Values.jpdDr }}/
+            - jf rt u {{ .Values.jpdDr }}/* $JFROG_CLI_PLUGINS_REPO/
+            - rm -rf {{ .Values.jpdDr }}
       - name: deleteRemoteRepositories
         type: utils/bashV2
         configuration:
@@ -150,10 +151,11 @@ pipelines:
             - jf {{ .Values.cliPlugin.name }} -v
             - jf {{ .Values.cliPlugin.name }} delete remote {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run={{ .Values.dryRunMode.delete }} --inventory=true
           onSuccess:
-            - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l       
-            - mkdir saas_dr && mv inventory*.yaml saas_dr/
-            - jf rt u saas_dr/* $JFROG_CLI_PLUGINS_REPO/
-            - rm -rf saas_dr
+            - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l
+            - ls -l {{ .Values.jpdDr }}    
+            - mkdir -p {{ .Values.jpdDr }} && mv inventory*.yaml {{ .Values.jpdDr }}/
+            - jf rt u {{ .Values.jpdDr }}/* $JFROG_CLI_PLUGINS_REPO/
+            - rm -rf {{ .Values.jpdDr }}
       - name: deleteVirtualRepositories
         type: utils/bashV2
         configuration:
@@ -170,7 +172,8 @@ pipelines:
             - jf {{ .Values.cliPlugin.name }} -v
             - jf {{ .Values.cliPlugin.name }} delete virtual {{ .Values.jpdMain }} {{ .Values.jpdDr }} --dry-run={{ .Values.dryRunMode.delete }} --inventory=true
           onSuccess:
-            - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l       
-            - mkdir saas_dr && mv inventory*.yaml saas_dr/
-            - jf rt u saas_dr/* $JFROG_CLI_PLUGINS_REPO/
-            - rm -rf saas_dr
+            - cd $JF_PLUGIN_REPOSYNC_INVENTORY_PATH && ls -l
+            - ls -l {{ .Values.jpdDr }}    
+            - mkdir -p {{ .Values.jpdDr }} && mv inventory*.yaml {{ .Values.jpdDr }}/
+            - jf rt u {{ .Values.jpdDr }}/* $JFROG_CLI_PLUGINS_REPO/
+            - rm -rf {{ .Values.jpdDr }}
