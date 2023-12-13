@@ -1,0 +1,21 @@
+pipelines:
+  - name: test_webhook
+    configuration:
+      environmentVariables:
+        readOnly:
+          envVarNpmRepo: avengers-npm
+          envVarGenericRepo: avengers-generic
+          envVarGenericPromoteRepo: avengers-rc-generic-local
+    steps:
+      - name: my_action
+        type: Bash
+        configuration:
+          inputResources:
+            - name: update_prop
+        execution:
+          onStart:
+            - echo onStart
+          onExecute:
+            - echo "$res_update_prop_payload" | jq '.' > payload.json
+            - cat payload.json
+#            - read_json payload.json "LESSER_SECRET_FORMULA"

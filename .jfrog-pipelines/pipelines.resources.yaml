@@ -1,0 +1,5 @@
+resources:
+  - name:       update_prop
+    type:       IncomingWebhook
+    configuration:
+      webhookName:  edge_update
